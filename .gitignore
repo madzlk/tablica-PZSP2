@@ -3,3 +3,5 @@
 
 # Ignore the virtual environment directory
 .venv/
+
+./docs/build/
