@@ -20,3 +20,6 @@ Contents
 
    usage
    api
+   requirements
+   diagnostics
+   work
