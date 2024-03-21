@@ -1,7 +1,7 @@
-﻿src.lumache
-===========
+﻿src.hello
+=========
 
-.. automodule:: src.lumache
+.. automodule:: src.hello
 
    
    
@@ -14,6 +14,8 @@
    .. autosummary::
    
       get_random_ingredients
+      print_hello
+      say_hi
    
    
 

@@ -12,7 +12,7 @@ import pathlib
 import sys
 sys.path.insert(0, str(pathlib.Path(__file__).parents[2].resolve()))
 
-project = 'Lumache'
+project = 'tablica'
 copyright = '2024, Magdalena Dudek'
 author = 'Magdalena Dudek'
 release = '0.1'
