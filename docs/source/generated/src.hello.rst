@@ -13,7 +13,6 @@
 
    .. autosummary::
    
-      get_random_ingredients
       print_hello
       say_hi
    
