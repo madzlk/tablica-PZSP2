@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Indeks" href="genindex.html" /><link rel="search" title="Szukaj" href="search.html" /><link rel="next" title="API" href="api.html" /><link rel="prev" title="Welcome to Lumache’s documentation!" href="index.html" />
+<link rel="index" title="Indeks" href="genindex.html" /><link rel="search" title="Szukaj" href="search.html" /><link rel="next" title="API" href="api.html" /><link rel="prev" title="Welcome to PZSP2’s documentation!" href="index.html" />
 
     <!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
-        <title>Usage - Lumache 0.1 - dokumentacja</title>
+        <title>Usage - tablica 0.1 - dokumentacja</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Lumache 0.1 - dokumentacja</div></a>
+      <a href="index.html"><div class="brand">tablica 0.1 - dokumentacja</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">Lumache 0.1 - dokumentacja</span>
+  <span class="sidebar-brand-text">tablica 0.1 - dokumentacja</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Szukaj" name="q" aria-label="Szukaj">
@@ -157,7 +157,7 @@
   <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Usage</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="generated/src.lumache.html">src.lumache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/src.hello.html">src.hello</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="requirements.html">Wymagania</a></li>
@@ -201,38 +201,6 @@
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h1>
 <section id="installation">
 <span id="id1"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
-<p>To use Lumache, first install it using pip:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(.venv)</span> <span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>lumache
-</pre></div>
-</div>
-</section>
-<section id="creating-recipes">
-<h2>Creating recipes<a class="headerlink" href="#creating-recipes" title="Permalink to this heading">#</a></h2>
-<p>To retrieve a list of random ingredients,
-you can use the <code class="docutils literal notranslate"><span class="pre">lumache.get_random_ingredients()</span></code> function:</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="src.lumache.get_random_ingredients">
-<span class="sig-prename descclassname"><span class="pre">src.lumache.</span></span><span class="sig-name descname"><span class="pre">get_random_ingredients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.lumache.get_random_ingredients" title="Stały odnośnik do tej definicji">#</a></dt>
-<dd><p>Return a list of random ingredients as strings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parametry<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>kind</strong> (<em>list</em><em>[</em><em>str</em><em>] or </em><em>None</em>) – Optional „kind” of ingredients.</p>
-</dd>
-<dt class="field-even">Wyrzuca<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>lumache.InvalidKindError</strong> – If the kind is invalid.</p>
-</dd>
-<dt class="field-odd">Zwraca<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The ingredients list.</p>
-</dd>
-<dt class="field-even">Typ zwracany<span class="colon">:</span></dt>
-<dd class="field-even"><p>list[str]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<p>The <code class="docutils literal notranslate"><span class="pre">kind</span></code> parameter should be either <code class="docutils literal notranslate"><span class="pre">&quot;meat&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;fish&quot;</span></code>,
-or <code class="docutils literal notranslate"><span class="pre">&quot;veggies&quot;</span></code>. Otherwise, <code class="xref py py-func docutils literal notranslate"><span class="pre">lumache.get_random_ingredients()</span></code>
-will raise an exception.</p>
 </section>
 </section>
 
@@ -293,10 +261,6 @@ will raise an exception.</p>
             <ul>
 <li><a class="reference internal" href="#">Usage</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#creating-recipes">Creating recipes</a><ul>
-<li><a class="reference internal" href="#src.lumache.get_random_ingredients"><code class="docutils literal notranslate"><span class="pre">get_random_ingredients()</span></code></a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>

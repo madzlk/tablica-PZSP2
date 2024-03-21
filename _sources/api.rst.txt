@@ -4,4 +4,4 @@ API
 .. autosummary::
    :toctree: generated
 
-   src.lumache
+   src.hello
