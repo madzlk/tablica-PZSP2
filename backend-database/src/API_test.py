@@ -11,9 +11,9 @@ import json
 #t1 = requests.post('https://api.um.warszawa.pl/api/action/busestrams_get/?resource_id=f2e5503e927d-4ad3-9500-4ab9e55deb59&type=1&line=523&apikey=fa0f3d27-bfbe-40b4-8e77-1b279b68f627')
 #print(t1.json())
 
-response = requests.get("https://api.um.warszawa.pl/api/action/dbtimetable_get?id=88cd555f-6f31-43ca-9de4-66c479ad5942&busstopId=1001&busstopNr=01&apikey=fa0f3d27-bfbe-40b4-8e77-1b279b68f627").json()
+response = requests.get("https://api.um.warszawa.pl/api/action/dbtimetable_get?id=e923fa0e-d96c-43f9-ae6e60518c9f3238&busstopId=1001&busstopNr=01&line=102&apikey=fa0f3d27-bfbe-40b4-8e77-1b279b68f627").json()
 print(response)
-with open('88.json', 'w') as f:
+with open('e9.json', 'w') as f:
     json.dump(response, f)
 #print(response.keys())
 #print(len(response))
