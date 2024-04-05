@@ -79,11 +79,33 @@ https://api.um.warszawa.pl/api/action/dbtimetable_get?id=88cd555f-6f31-43ca-9de4
 ```
 # 4.Pobranie rozkładu dla linii:
 ## Opis:
-
+Podstawowe zapytanie potrzebne do działania programu, zwraca czasy w których autbusy/tramwaje danej linii,
+będą się pojawiać na danym przystanku (rozkład jazdy)
 
 ## URL:
-https://api.um.warszawa.pl/api/action/dbtimetable_get?id=e923fa0e-d96c-43f9-ae6e60518c9f3238&busstopId=wartość&busstopNr=wartość&line=wartość&apikey=wartość
+https://api.um.warszawa.pl/api/action/dbtimetable_get?id=e923fa0e-d96c-43f9-ae6e-60518c9f3238&busstopId=wartość&busstopNr=wartość&line=wartość&apikey=wartość
 
 ## Parametry obowiązkowe:
- - 
+ - &apikey={wartośc klucza api}        każdy request wymaga klucza
+ - &busstopId={numer ID przystanku}    można go dostać z 1 lub 2 URL api.
+ - &busstopNr={numer słupka}           rozróżnia przystanki o tej samej nazwie/blisko siebie. dostajemy jako zwrot w 1 URL api.
+ - &line={numer linii}                 numer linii autbusu/tramwaju.
 
+## Zwraca:
+```
+{"result":
+        [{"values":
+                [{"value": "null", "key": "symbol_2"},
+                {"value": "null", "key": "symbol_1"},
+                {"value": "541", "key": "brygada"},
+                {"value": "PKP Olszynka Grochowska", "key": "kierunek"},
+                {"value": "TP-OLS", "key": "trasa"},
+                {"value": "05:06:00", "key": "czas"}]
+            },
+        {"values":
+                ...
+            },
+        ...
+    ] 
+}
+```
