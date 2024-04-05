@@ -13,7 +13,7 @@
 # Baza danych:
 ## Tabele:
 Uzasadnienie:
-Projekt nie wymaga skomplikowanej warstwy danych stałych - główną funkcją bazy danych jest przechowywanie informacji na temat stałej konfiguracji aplikacji tzn. które przystanki powinny być branę pod uwagę na mapie; ze względu na to że informacje nie będą pobierane cały czas, one również są zapisywane
+Projekt nie wymaga skomplikowanej warstwy danych stałych - główną funkcją bazy danych jest przechowywanie informacji na temat stałej konfiguracji aplikacji tzn. które przystanki powinny być branę pod uwagę na mapie; ze względu na to że informacje nie będą pobierane cały czas, one również są zapisywane, wraz z oznaczeniem kiedy zostałe pobrane - w ten sposób nawet kiedy API jest niedostępne cały projekt może nadal działać, albo w trybie "potencjalnie przestarzałego rozkładu" albo w trybie "przeciętnych odstępów" (np. ten autobus jeździ co 20 minut).
 ### Przystanki:
 Opisuje wszystkie przystanki, na podstawie tego jakie przystanki są wpisane w tej tabeli i które posiadają "1" w polu "czy brać pod uwagę na mapie" takie dane będą dostępne przez fastAPI
 
