@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { TransitStop } from "./types/TransitStop";
-import { Departure } from "./types/Departure";
-import { DepartureComponent } from "./components/DepartureComponent";
+import { TransitStopComponent } from "./components/TransitStopComponent";
 
 const placeholderStops: TransitStop[] = [
   {
@@ -209,22 +208,14 @@ function App() {
 
   useEffect(() => {
     setStops(placeholderStops);
+    // TODO: komunikacja z API
   }, []);
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen text-nowrap">
       <div className="h-[67%] grid grid-cols-3">
         {stops.map((item) => (
-          <div className="flex flex-col p-2 text-xl border-2">
-            <div className="mb-3 border-b-4">
-              <h2>{item.name} </h2>
-            </div>
-            <span className="flex flex-col">
-              {item.departures.map((departure) => (
-                <DepartureComponent departure={departure} />
-              ))}
-            </span>
-          </div>
+          <TransitStopComponent stop={item} />
         ))}
       </div>
       <div className="flex h-[33%] bg-slate-700 items-center justify-center">
