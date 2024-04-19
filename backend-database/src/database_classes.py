@@ -71,10 +71,15 @@ class DatabaseFacade:
         return self.fetchall_query('SELECT przystanki_id, linia, kierunek, czas_przyjazdu, brygada, trasa FROM rozkład_jazdy', ())
 
 # returns the ids of "active" stops (stops that have aktywny = '1')
-    def get_active_stops_id(self):
+    def get_active_stops_ids(self):
         res = self.fetchall_query('SELECT * FROM przystanki WHERE aktywny = "1"', ())
         return self.data_adp.parse_database_stop_ids(res)
     
+# returns the ids of "active" stops (stops that have aktywny = '1')
+    def get_active_stops(self):
+        res = self.fetchall_query('SELECT * FROM przystanki WHERE aktywny = "1"', ())
+        return res
+
 # returns n next buses/trams that will arrive at stop with given id
     def get_n_next_times(self, stop_id, n):
         res = self.data_adp.parse_times(self.fetchall_query('SELECT kierunek, czas_przyjazdu, brygada, trasa, data_ostatniego_przyjazdu FROM rozkład_jazdy WHERE przystanki_id = ? ORDER BY czas_przyjazdu', (stop_id,)))
