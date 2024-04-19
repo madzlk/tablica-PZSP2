@@ -1,41 +1,9 @@
 import sqlite3
 from datetime import datetime
 
-#===============================================DATABASE OBSERVER==============================================
-# This Class monitors for changes in the database using a hash,
-# and when a new state of the database is detected, it sends the signal to all of it's subscribers via
-# the "Update data" method, all subscribers need to have this method implemented.
-class DatabaseObserver:
-    def __init__(self, database_facade):
-        self.subscribers = []
-        self.database_facade = database_facade
-        self.database_state = self.prepare_database_hash()
-
-# Creates a hash from the database to use for comparison 
-# ignores unnecessary fields such as ids or timestamps (which get updated every time the database is updated)
-    def prepare_database_hash(self):
-        stops = str(self.database_facade.get_stops_hash())
-        timetables = str(self.database_facade.get_timetables_hash())
-        database = stops + timetables
-        db_hash = hash(database)
-        return db_hash
-    
-    def add_subscriber(self, sub):
-        self.subscribers.append(sub)
-
-# If the state has changed, change internal state to new state and return True (to signal change)
-    def check_for_change(self):
-        new_hash = self.prepare_database_hash()
-        if new_hash != self.database_state:
-            self.database_state = new_hash
-            return True
-        return False
-    
-# Check for changes and if changes have occured, send new database state to subscribers
-    def update(self):
-        if self.check_for_change():
-            for sub in self.subscribers:
-                sub.update_data()
+## TODO Dataface method for getting data for fastapi: active stops, next n buses/trams for a stopid
+# and corresponding methods in database adapter?
+# also update_time method that changes the time for the stops but not anything else.
 
 #===========================================DATABASE ADAPATER===========================================
 # Makes the data from the database facade more comfortable to work with
@@ -63,17 +31,16 @@ class DatabaseAdapter:
 #======================================DATABASE FACADE===============================================
 # This Class acts as a simple interface with the internal database
 class DatabaseFacade:
-    def __init__(self, database_adapter, database_file):
+    def __init__(self, database_file, database_adapter):
         self.data_adp = database_adapter
         self.db_file = database_file
 
 # Function used to get results of a query, with proper cursor management.
     def fetchall_query(self, query, values):
         con = sqlite3.connect(self.db_file)
-        cur = self.con.cursor()
-        result = cur.execute(query)
+        cur = con.cursor()
+        result = cur.execute(query, values)
         ret = result.fetchall()
-        con.commit()
         cur.close()
         con.close()
         return ret
@@ -81,9 +48,9 @@ class DatabaseFacade:
 # Function used to execute a command and commit it to the database, with proper cursor management.
     def execute_and_commit(self, query, values):
         con = sqlite3.connect(self.db_file)
-        cur = self.con.cursor()
+        cur = con.cursor()
         cur.execute(query, values)
-        self.connection.commit()
+        con.commit()
         cur.close()
         con.close()
 
@@ -107,19 +74,29 @@ class DatabaseFacade:
     def get_active_stops_id(self):
         res = self.fetchall_query('SELECT * FROM przystanki WHERE aktywny = "1"', ())
         return self.data_adp.parse_database_stop_ids(res)
+    
+# returns n next buses/trams that will arrive at stop with given id
+    def get_n_next_times(self, stop_id, n):
+        res = self.data_adp.parse_times(self.fetchall_query('SELECT kierunek, czas_przyjazdu, brygada, trasa, data_ostatniego_przyjazdu FROM rozkład_jazdy WHERE przystanki_id = ? ORDER BY czas_przyjazdu', (stop_id,)))
+        return res[:n]
 
 # Inserts new timetable data (and delete the old data)
-    def set_timetables(self, new_timetables):
+    def update_data(self, new_timetables):
         self.execute_and_commit('DELETE FROM rozkład_jazdy', ())
         new_timetables_query = self.data_adp.turn_timetables_into_query(new_timetables)
         con = sqlite3.connect(self.db_file)
-        cur = self.con.cursor()
+        cur = con.cursor()
         tt_1 = new_timetables_query[0]
         cur.execute(f"INSERT INTO rozkład_jazdy VALUES(1, ?, ?, ?, ?, ?, ?, strftime('%Y-%m-%d %H:%M:%f', ?))", tt_1)
         cur.executemany(f"INSERT INTO rozkład_jazdy( przystanki_id, linia, kierunek, czas_przyjazdu, brygada, trasa, data_ostatniego_pobrania) VALUES(?, ?, ?, ?, ?, ?, strftime('%Y-%m-%d %H:%M:%f', ?))", new_timetables_query[1:])
         con.commit()
         cur.close()
         con.close()
+
+# Changes only the times in every entry to rozkład_jazdy, this method is used
+# when the data from the API has been checked and it's the same that it was before.
+    def update_time(self):
+        self.execute_and_commit("UPDATE rozkład_jazdy SET data_ostatniego_pobrania = strftime('%Y-%m-%d %H:%M:%f', ?)", (str(datetime.now()),))
 
 # Insert another row to the przystanki table
     def add_stop(self, stop):
