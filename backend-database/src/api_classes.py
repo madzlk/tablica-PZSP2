@@ -1,23 +1,33 @@
 import requests
 import datetime
 
+# Provides a convenient interface for working with the API
 class ApiFacade:
     def __init__(self, api_key, api_adapter):
         self.api_key = api_key
         self.api_adapter = api_adapter
 
-    def get_all_stops(self):
-        response = self.api_adapter.parse_api_stops(requests.get(f'https://api.um.warszawa.pl/api/action/dbstore_get?id=ab75c33d-3a26-4342-b36a-6e5fef0a3ac3&apikey={self.api_key}').json())
-        return response
+# Throws appropriate exception depending on what has gone wrong with the api call.
+# Used further down the line by the Orchestrator to log errors.
+    def handle_api_not_working():
+        pass
 
+# Returns the list of all stops with their data (there's around 8000)
+    def get_all_stops(self):
+        response = (requests.get(f'https://api.um.warszawa.pl/api/action/dbstore_get?id=ab75c33d-3a26-4342-b36a-6e5fef0a3ac3&apikey={self.api_key}').json())
+        return self.api_adapter.parse_api_stops(response)
+
+# Returns lines that are available at a given stop
     def get_lines_for_stop(self, stop_id):
         response = requests.get(f'https://api.um.warszawa.pl/api/action/dbtimetable_get?id=88cd555f-6f31-43ca-9de4-66c479ad5942&busstopId={int(stop_id/100)}&busstopNr={str(stop_id)[-2:]}&apikey={self.api_key}').json()
         return response
     
+# Returns a timetable for a specific stop and line.
     def get_line_timetable(self, stop_id, line):
         response = requests.get(f'https://api.um.warszawa.pl/api/action/dbtimetable_get?id=e923fa0e-d96c-43f9-ae6e-60518c9f3238&busstopId={int(stop_id/100)}&busstopNr={str(stop_id)[-2:]}&line={line}&apikey={self.api_key}').json()
         return response
     
+# Returns the lines for a number of stops.
     def get_lines_for_stops(self, stop_ids):
         stops_lines = {}
         for stop in stop_ids:
@@ -25,6 +35,7 @@ class ApiFacade:
             stops_lines[stop] = stop_buses
         return stops_lines
     
+# Returns the timetables for a list of stops.
     def get_timetables_for_stops(self, stop_ids):
         stops_timetables = {}
         stop_lines = self.get_lines_for_stops(stop_ids)
@@ -75,6 +86,8 @@ class ApiAdapter:
             time_tables.append(time_table_entr)
         return time_tables
 
+# For some reason the API thinks it's ok to pass back a time value of "27:22:00"
+# I have absolutely zero idea why, but that's how it works so i need a function to fix it.
     def fix_time(self, time):
         tms = time.split(':')
         time_delta = datetime.timedelta(hours=int(tms[0]), minutes=int(tms[1]), seconds=int(tms[2]))
