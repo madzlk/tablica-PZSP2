@@ -1,6 +1,45 @@
 import requests
-import datetime
+from datetime import datetime, timedelta
 
+## TODO API FACADE error handling
+
+#===============================================DATABASE OBSERVER==============================================
+# This Class monitors for changes in the data using a hash,
+# and when a new state of the data is detected, it sends the signal to all of it's subscribers via
+# the "Update data" method, all subscribers need to have this method implemented.
+class DataObserver:
+    def __init__(self):
+        self.subscribers = []
+        self.data_hash = 0
+
+# Creates a hash from the data to use for comparison 
+# ignores unnecessary fields such as ids or timestamps (which get updated every time the data is updated)
+    def prepare_hash(self, data):
+        data_hash = hash(str(data))
+        return data_hash
+    
+    def add_subscriber(self, sub):
+        self.subscribers.append(sub)
+
+# If the state has changed, change internal state to new state and return True (to signal change)
+    def check_for_change(self, data):
+        new_hash = self.prepare_hash(data)
+        if new_hash != self.data_hash:
+            self.data_hash = new_hash
+            return True
+        return False
+    
+# Check for changes and if changes have occured, send new data state to subscribers,
+# otherwise sends the signal to update the time (since the data hasn't changed, but it has been checked.)
+    def update(self, data):
+        if self.check_for_change(data):
+            for sub in self.subscribers:
+                sub.update_data(data)
+        else:
+            for sub in self.subscribers:
+                sub.update_time()
+
+#============================================API FACADE======================================================
 # Provides a convenient interface for working with the API
 class ApiFacade:
     def __init__(self, api_key, api_adapter):
@@ -45,6 +84,7 @@ class ApiFacade:
                 stops_timetables[stop_id][line] = self.api_adapter.parse_api_timetables(self.get_line_timetable(stop_id, line))
         return stops_timetables
 
+#===================================================API ADAPTER==================================================
 # to understand the specific changes done to the data,
 # see "Opis api.md" for api response structure
 class ApiAdapter:
@@ -89,6 +129,9 @@ class ApiAdapter:
 # For some reason the API thinks it's ok to pass back a time value of "27:22:00"
 # I have absolutely zero idea why, but that's how it works so i need a function to fix it.
     def fix_time(self, time):
+        # turning arbitrary number of hours into max 24 h
         tms = time.split(':')
-        time_delta = datetime.timedelta(hours=int(tms[0]), minutes=int(tms[1]), seconds=int(tms[2]))
-        return str(datetime.timedelta(seconds=time_delta.seconds))
+        time_delta = timedelta(hours=int(tms[0]), minutes=int(tms[1]), seconds=int(tms[2]))
+        # adding the leading zero and returning
+        bad = datetime.strptime(str(timedelta(seconds=time_delta.seconds)), '%H:%M:%S')
+        return datetime.strftime(bad, '%H:%M:%S')
