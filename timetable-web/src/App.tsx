@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import { TransitStop } from "./types/TransitStop";
 import { TransitStopComponent } from "./components/TransitStopComponent";
+import { StopsMapComponent } from "./components/StopsMapComponent";
+import { StopsMap } from "./types/StopsMap";
+
+const mapSettings: StopsMap = {
+  zoom: 16,
+  centerLat: 52.21858,
+  centerLng: 21.013381991779095
+}
 
 const placeholderStops: TransitStop[] = [
   {
@@ -213,13 +221,13 @@ function App() {
 
   return (
     <div className="w-full h-screen text-nowrap">
-      <div className="h-[67%] grid grid-cols-3">
+      <div className="h-[65%] grid grid-cols-3">
         {stops.map((item) => (
           <TransitStopComponent stop={item} />
         ))}
       </div>
-      <div className="flex h-[33%] bg-slate-700 items-center justify-center">
-        <h2 className="text-white text-3xl">Tu może być mapa</h2>
+      <div className="flex h-[35%] bg-slate-700 items-center justify-center">
+        <StopsMapComponent mapSettings={mapSettings}/>
       </div>
     </div>
   );
