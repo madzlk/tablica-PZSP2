@@ -36,7 +36,6 @@ class DatabaseAdapter:
         for stop in timetables:
             for line in timetables[stop]:
                 for time in timetables[stop][line]:
-                    print(time)
                     result.append((stop, line, time[1], time[3], time[0], time[2], str(now)))
         return result
     
