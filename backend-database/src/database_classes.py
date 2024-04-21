@@ -14,7 +14,7 @@ class DatabaseError(Exception):
 # None, all of them use the database, mocking a database would be pointless since
 # it would just be testing our mock methods, and not the interactions with an actual database
 
-# Status of tests: Not written, not passing
+# Status of tests: All written, all passing
 
 #===========================================DATABASE ADAPATER===========================================
 # Makes the data from the database facade more comfortable to work with
@@ -36,6 +36,7 @@ class DatabaseAdapter:
         for stop in timetables:
             for line in timetables[stop]:
                 for time in timetables[stop][line]:
+                    print(time)
                     result.append((stop, line, time[1], time[3], time[0], time[2], str(now)))
         return result
     

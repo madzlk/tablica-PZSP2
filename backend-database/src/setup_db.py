@@ -30,7 +30,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS przystanki (
 cur.execute("""CREATE TABLE IF NOT EXISTS rozkład_jazdy (
     id_wpisu                 INTEGER PRIMARY KEY ASC AUTOINCREMENT,
     przystanki_id            REFERENCES przystanki(ID) ON DELETE CASCADE NOT NULL,
-    linia                    INTEGER NOT NULL,
+    linia                    NVARCHAR2(5) NOT NULL,
     kierunek                 NVARCHAR2(64) NOT NULL,
     czas_przyjazdu           TIME NOT NULL,
     brygada                  INTEGER,
