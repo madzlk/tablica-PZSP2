@@ -2,6 +2,9 @@
 import sqlite3
 from datetime import datetime
 
+# Nothing to test here as well, this is just an SQLite script,
+# And it should only be run once, to being the operation of the whole system.
+
 # Create the database, connect to the database, create cursor
 con = sqlite3.connect("tablica.db")
 cur = con.cursor()
@@ -36,6 +39,8 @@ cur.execute("""CREATE TABLE IF NOT EXISTS rozkład_jazdy (
 );""")
 
 # Inserting data into przystanki table - if at any point the stops that are visible should change, this will create problems.
+# WHICH IS WHY YOU ONLY RUN THIS ONCE AFTER THE SYSTEM BEGINS WORKING.
+# or you just run this again an then add the other stops via the administrator console.
 now = datetime.now()
 cur.execute(f"""INSERT INTO przystanki VALUES
             (700501, 1, 'pl.Politechniki', 52.220031, 21.011500, 1, 'Metro Politechnika', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '1'),
@@ -47,9 +52,9 @@ cur.execute(f"""INSERT INTO przystanki VALUES
             (700605, 7, 'Metro Politechnika', 52.218744, 21.015268, 5, 'rondo Jazdy Polskiej', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '1'),
             (700607, 8, 'Metro Politechnika', 52.219250, 21.015343, 5, 'rondo Jazdy Polskiej', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '1'),
             (700609, 9, 'Metro Politechnika', 52.219489, 21.015401, 5, 'rondo Jazdy Polskiej', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '1'),
-            (700610, 10, 'Metro Politechnika', 52.218539, 21.015497, 7, 'pl.Konstytucji', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '1'),
-            (700612, 11, 'Metro Politechnika', 52.218778, 21.015517, 7, 'pl.Konstytucji', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '1'),
-            (700614, 12, 'Metro Politechnika', 52.219201, 21.015599, 7, 'pl.Konstytucji', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '1'),
+            (700610, 12, 'Metro Politechnika', 52.218539, 21.015497, 7, 'pl.Konstytucji', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '0'),
+            (700612, 10, 'Metro Politechnika', 52.218778, 21.015517, 7, 'pl.Konstytucji', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '1'),
+            (700614, 11, 'Metro Politechnika', 52.219201, 21.015599, 7, 'pl.Konstytucji', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '1'),
             (700651, 13, 'Metro Politechnika', 52.217019, 21.014412, 8, 'null', strftime("%Y-%m-%d %H:%M:%f", "{now}"), '0')
 """)
 con.commit()
