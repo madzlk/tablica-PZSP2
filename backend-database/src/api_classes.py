@@ -1,10 +1,10 @@
 import requests
 from datetime import datetime, timedelta
 
-class CouldNotConnect(Warning):
+class CouldNotConnect(Exception):
     pass
 
-class IncorrectApiCall(Warning):
+class IncorrectApiCall(Exception):
     pass
 
 # Functions that are deterministic (can be tested):
@@ -21,7 +21,7 @@ class IncorrectApiCall(Warning):
 # - parse api timetables
 # - fix time
 
-# Status of tests: Not written, not passing
+# Status of tests: All written, all passing
 
 #===============================================DATABASE OBSERVER==============================================
 # This Class monitors for changes in the data using a hash,
@@ -131,7 +131,8 @@ class ApiAdapter:
             stop_geo_1 = self.v(stop_response[4])
             stop_geo_2 = self.v(stop_response[5])
             stop_destination = self.v(stop_response[6])
-            stop_data = (stop_id, stop_name, stop_geo_1, stop_geo_2, stop_destination)
+            stop_start_date = self.v(stop_response[7])
+            stop_data = (int(stop_id), stop_name, float(stop_geo_1), float(stop_geo_2), stop_destination, stop_start_date)
             stops.append(stop_data)
         return stops
 
