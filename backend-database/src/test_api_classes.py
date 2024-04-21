@@ -30,7 +30,7 @@ class TestApiAdapter:
         assert api.parse_api_stops({"result": [{"values": [{"value": "1001", "key": "zespol"},{"value": '01', "key": "slupek"},{"value": "Testowy przystanek", "key": "nazwa_zespolu"},{"value": "1001", "key": "id_ulicy"},{"value": "50.0000", "key": "szer_geo"}, {"value": "20.0000", "key": "dlug_geo"}, {"value": "testowo", "key": "kierunek"}, {"value": "1969-01-01 00:00:00.0", "key": "obowiązuje od"}]}]}) == [(100101,  "Testowy przystanek", 50.0000, 20.0000, "testowo", "1969-01-01 00:00:00.0")]
 
     def test_parse_api_lines(self):
-        assert api.parse_api_lines({"result": [{"values":[{"value":"101", "key":"linia"}]}, {"values":[{"value":"404", "key":"linia"}]}]}) == ["101", "404"]
+        assert api.parse_api_lines({"result": [{"values":[{"value":"143", "key":"linia"}]}, {"values":[{"value":"187", "key":"linia"}]}]}) == ["143", "187"]
 
     def test_parse_api_timetables(self):
         assert api.parse_api_timetables({"result":[{"values":[{"value":"nieważne", "key":"symbol_2"},{"value":"nieważne", "key":"symbol_1"},{"value":"101", "key":"brygada"},{"value":"testowo", "key":"kierunek"},{"value":"TP-TOP", "key":"trasa"},{"value":"6:47:00", "key":"czas"}]}]}) == [("101", "testowo", "TP-TOP", "06:47:00")]
