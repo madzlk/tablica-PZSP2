@@ -1,6 +1,5 @@
 import requests
 from datetime import datetime, timedelta
-import builtins
 
 class CouldNotConnect(Warning):
     pass
@@ -8,7 +7,21 @@ class CouldNotConnect(Warning):
 class IncorrectApiCall(Warning):
     pass
 
-## TODO API FACADE error handling
+# Functions that are deterministic (can be tested):
+# Data Observer:
+# - prepare hash
+# - check for change
+# 
+# Api Facade:
+# Similar to database facade, none, since we would be testing our mocked functions and not the actual connection to the api
+#
+# Api Adapter:
+# - parse api stops
+# - parse api lines
+# - parse api timetables
+# - fix time
+
+# Status of tests: Not written, not passing
 
 #===============================================DATABASE OBSERVER==============================================
 # This Class monitors for changes in the data using a hash,
@@ -52,11 +65,6 @@ class ApiFacade:
     def __init__(self, api_key, api_adapter):
         self.api_key = api_key
         self.api_adapter = api_adapter
-
-# Throws appropriate exception depending on what has gone wrong with the api call.
-# Used further down the line by the Orchestrator to log errors.
-    def handle_api_not_working():
-        pass
 
 # Returns the list of all stops with their data (there's around 8000)
     def get_all_stops(self):
