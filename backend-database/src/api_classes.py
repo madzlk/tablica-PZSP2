@@ -1,5 +1,12 @@
 import requests
 from datetime import datetime, timedelta
+import builtins
+
+class CouldNotConnect(Warning):
+    pass
+
+class IncorrectApiCall(Warning):
+    pass
 
 ## TODO API FACADE error handling
 
@@ -53,19 +60,28 @@ class ApiFacade:
 
 # Returns the list of all stops with their data (there's around 8000)
     def get_all_stops(self):
-        response = (requests.get(f'https://api.um.warszawa.pl/api/action/dbstore_get?id=ab75c33d-3a26-4342-b36a-6e5fef0a3ac3&apikey={self.api_key}').json())
-        return self.api_adapter.parse_api_stops(response)
+        try:
+            response = (requests.get(f'https://api.um.warszawa.pl/api/action/dbstore_get?id=ab75c33d-3a26-4342-b36a-6e5fef0a3ac3&apikey={self.api_key}').json())
+            return self.api_adapter.parse_api_stops(response)
+        except:
+            raise CouldNotConnect("Couldn't connect to the API")
 
 # Returns lines that are available at a given stop
     def get_lines_for_stop(self, stop_id):
-        response = requests.get(f'https://api.um.warszawa.pl/api/action/dbtimetable_get?id=88cd555f-6f31-43ca-9de4-66c479ad5942&busstopId={int(stop_id/100)}&busstopNr={str(stop_id)[-2:]}&apikey={self.api_key}').json()
-        return response
+        try:
+            response = requests.get(f'https://api.um.warszawa.pl/api/action/dbtimetable_get?id=88cd555f-6f31-43ca-9de4-66c479ad5942&busstopId={int(stop_id/100)}&busstopNr={str(stop_id)[-2:]}&apikey={self.api_key}').json()
+            return response
+        except:
+            raise CouldNotConnect("Couldn't connect to the API")
     
 # Returns a timetable for a specific stop and line.
     def get_line_timetable(self, stop_id, line):
-        response = requests.get(f'https://api.um.warszawa.pl/api/action/dbtimetable_get?id=e923fa0e-d96c-43f9-ae6e-60518c9f3238&busstopId={int(stop_id/100)}&busstopNr={str(stop_id)[-2:]}&line={line}&apikey={self.api_key}').json()
-        return response
-    
+        try:
+            response = requests.get(f'https://api.um.warszawa.pl/api/action/dbtimetable_get?id=e923fa0e-d96c-43f9-ae6e-60518c9f3238&busstopId={int(stop_id/100)}&busstopNr={str(stop_id)[-2:]}&line={line}&apikey={self.api_key}').json()
+            return response
+        except:
+            raise CouldNotConnect("Couldn't connect to the API")    
+
 # Returns the lines for a number of stops.
     def get_lines_for_stops(self, stop_ids):
         stops_lines = {}
@@ -96,6 +112,9 @@ class ApiAdapter:
 
 # takes in the api response, returns a list of tuples with the stop data
     def parse_api_stops(self, api_stops_response):
+        if isinstance(api_stops_response['result'], str):
+            raise IncorrectApiCall('Api call failed')
+            return None
         stops = []
         for stop_response in api_stops_response['result']:
             stop_response = stop_response['values']
@@ -110,6 +129,9 @@ class ApiAdapter:
 
 # takes in the api response, returns a list of lines
     def parse_api_lines(self, api_lines_response):
+        if isinstance(api_lines_response['result'], str):
+            raise IncorrectApiCall('Api call failed')
+            return None
         lines = []
         for line_dict in api_lines_response['result']:
             line_info = line_dict['values']
@@ -119,6 +141,9 @@ class ApiAdapter:
 
 # takes in the api response, returns a dict with the data
     def parse_api_timetables(self, api_timetables_response):
+        if isinstance(api_timetables_response['result'], str):
+            raise IncorrectApiCall('Api call failed')
+            return None
         time_tables = []
         for time_table in api_timetables_response['result']:
             t_t_i = time_table['values']
