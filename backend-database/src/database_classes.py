@@ -4,9 +4,17 @@ from datetime import datetime
 class DatabaseError(Exception):
     pass
 
-## TODO Dataface method for getting data for fastapi: active stops, next n buses/trams for a stopid
-# and corresponding methods in database adapter?
-# also update_time method that changes the time for the stops but not anything else.
+# Functions that are deterministic (can be tested):
+# DatabaseAdapter:
+# - parse database stop ids
+# - turn timetables into query
+# - parse times
+#
+# DatabaseFacade:
+# None, all of them use the database, mocking a database would be pointless since
+# it would just be testing our mock methods, and not the interactions with an actual database
+
+# Status of tests: Not written, not passing
 
 #===========================================DATABASE ADAPATER===========================================
 # Makes the data from the database facade more comfortable to work with
@@ -31,7 +39,7 @@ class DatabaseAdapter:
                     result.append((stop, line, time[1], time[3], time[0], time[2], str(now)))
         return result
     
-# turn the result of a query into a table of times starting with now and going up.
+# turn the result of a query into a table of times starting with now and going up (and back around if necessary)
     def parse_times(self, times):
         times = list(times)
         now = datetime.strftime(datetime.now(), '%H:%M:%S')
