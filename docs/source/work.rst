@@ -1,5 +1,0 @@
-Organizacja
-=================
-
-Wybrane narzędzia
------------------
