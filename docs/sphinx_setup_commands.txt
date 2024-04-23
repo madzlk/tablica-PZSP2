@@ -1,9 +1,0 @@
-python version: 3.12
-
-to run sphinx:
-1. create virtual enviroment - python -m venv .venv
-2. activate virtual enviroment - .\.venv\Scripts\activate (Windows)
-3. install sphinx - pip install sphinx
-4. do basic verification - sphinx-build --version
-OUTPUT similar to: sphinx-build 7.2.6
-5. build the documentation - sphinx-build -M html docs/source/ docs/build/
