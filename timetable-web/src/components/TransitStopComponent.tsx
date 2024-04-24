@@ -13,9 +13,7 @@ export const TransitStopComponent = ({ stop }: Props) => {
 
   useEffect(() => {
     const fetchData = () => {
-      stops
-        .getTimesForStop(stop.id, 6)
-        .then(data => setDepartures(data));
+      stops.getTimesForStop(stop.id, 7).then((data) => setDepartures(data));
     };
 
     fetchData();
@@ -29,15 +27,15 @@ export const TransitStopComponent = ({ stop }: Props) => {
   }, []);
 
   return (
-    <div className="flex max-h-full flex-col p-2 text-xl border-2">
-      <div className="mb-3 border-b-4">
+    <div className="flex flex-col bg-[#B49FAA] text-nowrap leading-tight">
+      <div className="mb-1 bg-white p-1 px-2 text-xl font-semibold">
         <h2>{stop.nazwa} </h2>
       </div>
-      <span className="">
+      <div className="flex flex-col justify-around gap-1 h-full p-1 text-white">
         {departures.map((departure) => (
           <DepartureComponent departure={departure} />
         ))}
-      </span>
+      </div>
     </div>
-  )
+  );
 };
