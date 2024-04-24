@@ -1,7 +1,7 @@
 export interface Stop {
-    id: number,
-    lat: number,
-    lng: number,
-    stopName: string,
-    stopType: string
+    id: number;
+    nazwa: string;
+    odleglosc: number;
+    szer_geo: number;
+    dlug_geo: number;
 }

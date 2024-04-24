@@ -1,5 +1,5 @@
+import { TransitStop } from "./TransitStop";
+
 export interface StopsMap {
-    zoom: number,
-    centerLat: number,
-    centerLng: number,
+    stops: TransitStop[];
 }

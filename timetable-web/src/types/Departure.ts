@@ -1,5 +1,5 @@
 export interface Departure {
-  arrivalTime: Date; // Time at which the bus/tram will arrive
-  line: string; // Bus/Tram number
-  direction: string; // Direction, e.g. Metro Politechnika
+  linia: string; // Time at which the bus/tram will arrive
+  kierunek: string; // Bus/Tram number
+  czas_przyjazdu: string; // Direction, e.g. Metro Politechnika
 }
