@@ -1,8 +1,17 @@
 from database_classes import DatabaseFacade, DatabaseAdapter
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 data_face = DatabaseFacade('tablica.db', DatabaseAdapter())
 fast_api = FastAPI()
+
+fast_api.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["GET"],
+    allow_headers=["Content-Type"]
+)
 
 # Nothing to test here since this is all completely unpure, test have to be more complex than
 # unit tests.
