@@ -1,3 +1,4 @@
+import json
 import sqlite3
 from datetime import datetime
 
@@ -106,14 +107,50 @@ class DatabaseFacade:
         return self.data_adp.parse_database_stop_ids(res)
     
 # returns the ids of "active" stops (stops that have aktywny = '1')
-    def get_active_stops(self):
-        res = self.fetchall_query('SELECT * FROM przystanki WHERE aktywny = "1"', ())
-        return res
+    # def get_active_stops(self):
+    #     res = self.fetchall_query('SELECT * FROM przystanki WHERE aktywny = "1"', ())
+    #     return res
 
 # returns n next buses/trams that will arrive at stop with given id
+    # def get_n_next_times(self, stop_id, n):
+    #     res = self.data_adp.parse_times(self.fetchall_query('SELECT linia, kierunek, czas_przyjazdu, brygada, trasa, data_ostatniego_pobrania FROM rozkład_jazdy WHERE przystanki_id = ? ORDER BY czas_przyjazdu', (stop_id,)))
+    #     return res[:n]
+
+    def get_active_stops(self):
+        res = self.fetchall_query('SELECT * FROM przystanki WHERE aktywny = "1"', ())
+        
+        stops = []
+        for row in res:
+            stop = {
+                'id': row[0],
+                'wewnetrzne_id': row[1],
+                'nazwa': row[2],
+                'szer_geo': row[3],
+                'dlug_geo': row[4],
+                'odleglosc': row[5],
+                'kierunek': row[6],
+                'aktywny': row[7]
+            }
+            stops.append(stop)
+        
+        return stops
+
     def get_n_next_times(self, stop_id, n):
         res = self.data_adp.parse_times(self.fetchall_query('SELECT linia, kierunek, czas_przyjazdu, brygada, trasa, data_ostatniego_pobrania FROM rozkład_jazdy WHERE przystanki_id = ? ORDER BY czas_przyjazdu', (stop_id,)))
-        return res[:n]
+        times = []
+
+        for row in res:
+            time = {
+                'linia': row[0],
+                'kierunek': row[1],
+                'czas_przyjazdu': row[2],
+                'brygada': row[3],
+                'trasa': row[4],
+                'data_ostatniego_pobrania': row[5]
+            }
+            times.append(time)
+        
+        return times[:n]
 
 # Inserts new timetable data (and delete the old data)
     def update_data(self, new_timetables):
