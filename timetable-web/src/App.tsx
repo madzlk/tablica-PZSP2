@@ -3,220 +3,23 @@ import { TransitStop } from "./types/TransitStop";
 import { TransitStopComponent } from "./components/TransitStopComponent";
 import { StopsMapComponent } from "./components/StopsMapComponent";
 import { StopsMap } from "./types/StopsMap";
+import stopsService from "./services/stops";
 
-const mapSettings: StopsMap = {
-  zoom: 16,
-  centerLat: 52.21858,
-  centerLng: 21.013381991779095
-}
 
-const placeholderStops: TransitStop[] = [
-  {
-    departures: [
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-    ],
-    isBusStop: false,
-    name: "Plac Politechniki 01",
-    walkTime: 2,
-  },
-  {
-    departures: [
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-    ],
-    isBusStop: false,
-    name: "Plac Politechniki 01",
-    walkTime: 2,
-  },
-  {
-    departures: [
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-    ],
-    isBusStop: false,
-    name: "Plac Politechniki 01",
-    walkTime: 2,
-  },
-  {
-    departures: [
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-    ],
-    isBusStop: false,
-    name: "Plac Politechniki 01",
-    walkTime: 2,
-  },
-  {
-    departures: [
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-    ],
-    isBusStop: false,
-    name: "Plac Politechniki 01",
-    walkTime: 2,
-  },
-  {
-    departures: [
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-    ],
-    isBusStop: false,
-    name: "Plac Politechniki 01",
-    walkTime: 2,
-  },
-  {
-    departures: [
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-    ],
-    isBusStop: false,
-    name: "Plac Politechniki 01",
-    walkTime: 2,
-  },
-  {
-    departures: [
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-    ],
-    isBusStop: false,
-    name: "Plac Politechniki 01",
-    walkTime: 2,
-  },
-  {
-    departures: [
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-      {
-        line: "4",
-        direction: "Rondo Żaba",
-        arrivalTime: new Date(Date.now()),
-      },
-    ],
-    isBusStop: false,
-    name: "Plac Politechniki 01",
-    walkTime: 2,
-  },
-];
+// const mapSettings: StopsMap = {
+//   zoom: 16,
+//   centerLat: 52.21858,
+//   centerLng: 21.013381991779095
+// }
 
 function App() {
   const [stops, setStops] = useState<TransitStop[]>([]);
 
   useEffect(() => {
-    setStops(placeholderStops);
-    // TODO: komunikacja z API
+    stopsService
+      .getAllStops()
+      .then(data => {let slicedData = data.slice(0,6); setStops(slicedData); console.log(data)})
+      .catch(error => console.error(error));    
   }, []);
 
   return (
@@ -227,7 +30,7 @@ function App() {
         ))}
       </div>
       <div className="flex h-[35%] bg-slate-700 items-center justify-center">
-        <StopsMapComponent mapSettings={mapSettings}/>
+        <StopsMapComponent mapStops={{"stops": stops}}/>
       </div>
     </div>
   );

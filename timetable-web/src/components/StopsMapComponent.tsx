@@ -8,45 +8,38 @@ import {
     APIProvider,
     Map,
 } from "@vis.gl/react-google-maps";
+import { TransitStop } from "../types/TransitStop";
 
 interface Props {
-  mapSettings: StopsMap;
+  mapStops: StopsMap;
 }
 
-export const StopsMapComponent = ({ mapSettings }: Props) => {
-    const [ stops, setStops ] = useState<Stop[]>([]);
+export const StopsMapComponent = ({ mapStops }: Props) => {
+    // const [ lat, setLat ] = useState<number>(0);
+    // const [ lng, setLng ] = useState<number>(0);
 
-    const mockedStops: Stop[] = [{
-        lat: 52.21765094183412,
-        lng: 21.014004264559684,
-        stopName: "Metro Politechnika",
-        stopType: "metro",
-        id: 1
-    },
-    {
-        lat: 52.21992379181962,
-        lng: 21.01151517475397,
-        stopName: "Plac Politechniki",
-        stopType: "tram",
-        id: 2
-    },
-    {
-        lat: 52.2191035880524,
-        lng: 21.015699420494222,
-        stopName: "Metro Politechnika",
-        stopType: "bus",
-        id: 3
-    }]
+    // const defineCenter = (mapStops: TransitStop[]) => {
+    //     let center = {lat: 0, lng: 0};
+    //     for (let i = 0; i < mapStops.length; i++)
+    //     {
+    //         center.lat += mapStops[i].szer_geo;
+    //         center.lng += mapStops[i].dlug_geo;
+    //     }
+    //     center.lat /= mapStops.length;
+    //     center.lng /= mapStops.length;
+    //     return center
+    // };
 
-    useEffect(() => {
-        setStops(mockedStops);
-    }, [])
-
+    // useEffect(() => {
+    //     const obj = defineCenter(mapStops.stops);
+    //     setLat(obj.lat);
+    //     setLng(obj.lng);
+    // }, [mapStops])
 
     return (
         <APIProvider apiKey={import.meta.env.VITE_MAPS_API_KEY}>
-            <Map zoom={mapSettings.zoom} center={{lat: mapSettings.centerLat, lng: mapSettings.centerLng}} mapId="805ef0f3bc515e9" mapTypeControl={false} zoomControl={false} streetViewControl={false} fullscreenControl={false}>
-                {stops.map(stop => <StopComponent stop={stop} key={stop.id}/>)}
+            <Map zoom={15} center={{lat: 52.21858, lng: 21.013381991779095}} mapId="805ef0f3bc515e9" mapTypeControl={false} zoomControl={false} streetViewControl={false} fullscreenControl={false}>
+                {mapStops.stops.map(stop => <StopComponent stop={stop} key={stop.id}/>)}
             </Map>
         </APIProvider>
     );
