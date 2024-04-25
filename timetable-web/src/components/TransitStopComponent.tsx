@@ -13,7 +13,7 @@ export const TransitStopComponent = ({ stop }: Props) => {
 
   useEffect(() => {
     const fetchData = () => {
-      stops.getTimesForStop(stop.id, 7).then((data) => setDepartures(data));
+      stops.getTimesForStop(stop.id, 6).then((data) => setDepartures(data));
     };
 
     fetchData();
