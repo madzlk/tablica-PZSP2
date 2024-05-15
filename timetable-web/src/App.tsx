@@ -29,9 +29,9 @@ function App() {
       <div className="flex h-[25%] horizontal:h-full horizontal:w-[25%] items-center justify-center p-6">
         <StopsMapComponent mapStops={{ stops: stops }} />
       </div>
-      <div className="h-[74%] horizontal:h-full horizontal:w-[74%] grid grid-cols-3 horizontal:grid-cols-4 horizontal:p-2 gap-3 mx-4 ">
-        {stops.map((item) => (
-          <TransitStopComponent stop={item} />
+      <div className="h-[74%] horizontal:h-full horizontal:w-[74%] grid grid-cols-3 horizontal:grid-cols-4 horizontal:p-2 gap-3 mx-4">
+        {stops.map((item, index) => (
+          <TransitStopComponent key={item.id} stop={item} componentId={index + 1} />
         ))}
       </div>
     </div>

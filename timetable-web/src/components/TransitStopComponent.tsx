@@ -7,9 +7,10 @@ import { BiWalk } from "react-icons/bi";
 
 interface Props {
   stop: TransitStop;
+  componentId: number;
 }
 
-export const TransitStopComponent = ({ stop }: Props) => {
+export const TransitStopComponent = ({ stop, componentId }: Props) => {
   const [departures, setDepartures] = useState<Departure[]>([]);
 
   useEffect(() => {
@@ -31,10 +32,15 @@ export const TransitStopComponent = ({ stop }: Props) => {
     <div className="flex flex-col bg-[#B49FAA] text-nowrap leading-tight">
       <div className="mb-1 bg-white p-1 px-2 text-xl font-semibold">
         <div className="flex flex-row justify-between">
-          <h2>
-            {stop.nazwa} {" " + stop.id.toString().slice(-2)}
-          </h2>
-          <div className="bg-[#7895CF] rounded-md px-1 text-xs lg:text-sm xl:text-base ml-1 font-semibold flex items-center">
+          <div className="flex items-center">
+            <div className="bg-[#7895CF] rounded-md px-3 text-xs lg:text-sm xl:text-base ml-1 mr-3 font-semibold text-white">
+              {componentId}
+            </div>
+            <h2>
+              {stop.nazwa} {" " + stop.id.toString().slice(-2)}
+            </h2>
+          </div>
+          <div className="bg-[#7895CF] rounded-md px-1 text-xs lg:text-sm xl:text-base ml-1 font-semibold flex items-center text-white">
             <BiWalk/> {stop.odleglosc} min
           </div>
         </div>
