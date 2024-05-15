@@ -44,8 +44,8 @@ export const StopsMapComponent = ({ mapStops }: Props) => {
         streetViewControl={false}
         fullscreenControl={false}
       >
-        {mapStops.stops.map((stop) => (
-          <StopComponent stop={stop} key={stop.id} />
+        {mapStops.stops.map((stop, index) => (
+          <StopComponent stop={stop} key={stop.id} componentId={index+1}/>
         ))}
       </Map>
     </APIProvider>
