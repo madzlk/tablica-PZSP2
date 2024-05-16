@@ -18,7 +18,7 @@ function App() {
     stopsService
       .getAllStops()
       .then((data) => {
-        data = stopsService.adjustDistances(data)
+        data = stopsService.adjustDistances(data);
         setStops(data);
       })
       .catch((error) => console.error(error));
@@ -29,7 +29,11 @@ function App() {
       <div className="flex h-[25%] horizontal:h-full horizontal:w-[25%] items-center justify-center p-6">
         <StopsMapComponent mapStops={{ stops: stops }} />
       </div>
-      <div className="h-[74%] horizontal:h-full horizontal:w-[74%] grid grid-cols-3 horizontal:grid-cols-4 horizontal:p-2 gap-3 mx-4">
+      <div
+        className={`h-[74%] horizontal:h-full horizontal:w-[74%] grid grid-cols-${
+          stops.length < 13 ? "2" : "3"
+        } horizontal:grid-cols-4 horizontal:p-2 gap-3 mx-4`}
+      >
         {stops.map((item, index) => (
           <TransitStopComponent
             key={item.id}
