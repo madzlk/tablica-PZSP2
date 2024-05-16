@@ -33,15 +33,15 @@ export const TransitStopComponent = ({ stop, componentId }: Props) => {
       <div className="mb-1 bg-white p-1 px-2 text-xl font-semibold">
         <div className="flex flex-row justify-between">
           <div className="flex items-center">
-            <div className="bg-[#7895CF] rounded-md px-3 py-1 text-xs lg:text-sm xl:text-base mr-2 font-semibold text-white">
-              {componentId}
+            <div className="bg-[#7895CF] rounded-md px-1 mr-1 py-1 text-xs lg:text-sm xl:text-base font-semibold text-white">
+              {stop.nazwa[0].toUpperCase() + stop.id.toString().slice(-2)}
             </div>
             <h2 className="text-base">
               {stop.nazwa} {" " + stop.id.toString().slice(-2)}
             </h2>
           </div>
-          <div className="bg-[#7895CF] rounded-md px-1 text-xs lg:text-sm xl:text-base ml-1 font-semibold flex items-center text-white">
-            <BiWalk/> {stop.odleglosc} min
+          <div className="rounded-md px-1 text-xs lg:text-sm xl:text-base ml-1 font-semibold flex items-center text-black">
+            <BiWalk /> {stop.odleglosc} min
           </div>
         </div>
       </div>
