@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { StopsMap } from "../types/StopsMap";
 import { StopComponent } from "./StopComponent";
-import { Stop } from "../types/Stop";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
-import { TransitStop } from "../types/TransitStop";
+
 
 interface Props {
   mapStops: StopsMap;
@@ -36,7 +34,7 @@ export const StopsMapComponent = ({ mapStops }: Props) => {
   return (
     <APIProvider apiKey={import.meta.env.VITE_MAPS_API_KEY}>
       <Map
-        zoom={16}
+        zoom={16.61}
         center={{ lat: 52.21858, lng: 21.013381991779095 }}
         mapId="805ef0f3bc515e9"
         mapTypeControl={false}
@@ -44,8 +42,8 @@ export const StopsMapComponent = ({ mapStops }: Props) => {
         streetViewControl={false}
         fullscreenControl={false}
       >
-        {mapStops.stops.map((stop) => (
-          <StopComponent stop={stop} key={stop.id} />
+        {mapStops.stops.map((stop, index) => (
+          <StopComponent stop={stop} key={stop.id} componentId={index+1}/>
         ))}
       </Map>
     </APIProvider>

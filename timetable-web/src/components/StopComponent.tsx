@@ -3,13 +3,14 @@ import { Stop } from "../types/Stop";
 
 interface Props {
   stop: Stop;
+  componentId: number;
 }
 
-export const StopComponent = ({ stop }: Props) => {
+export const StopComponent = ({ stop, componentId }: Props) => {
     return (
         <AdvancedMarker position={{lat: stop.szer_geo, lng: stop.dlug_geo}}>
-            <div style={{height: '30px', width: '60px'}}>
-                <p style={{color: 'blue'}}><b>{stop.nazwa} {stop.id.toString().slice(-2)}</b></p>
+            <div className="bg-[#7895CF] rounded-md px-1 text-base xl:text-sm font-semibold text-white">
+                {stop.nazwa[0].toUpperCase() + stop.id.toString().slice(-2)}
             </div>
         </AdvancedMarker>
     );
