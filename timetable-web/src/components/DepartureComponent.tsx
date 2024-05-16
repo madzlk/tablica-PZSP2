@@ -17,7 +17,7 @@ export const DepartureComponent = ({ departure }: Props) => {
   };
 
   let displayArrivalTime = (arrival: number, now: number) => {
-    var difference = 0
+    var difference = 0;
     if (arrival < now) {
       var midnight = new Date();
       midnight.setHours(24);
@@ -31,22 +31,32 @@ export const DepartureComponent = ({ departure }: Props) => {
 
       var arrivalDate = parseArrivalTime(departure.czas_przyjazdu);
 
-      difference = (
-        until_midnight + arrivalDate.getMinutes() + arrivalDate.getHours() * 60
-      );
+      difference =
+        until_midnight + arrivalDate.getMinutes() + arrivalDate.getHours() * 60;
     } else {
       difference = Math.floor((arrival - now) / (1000 * 60));
     }
 
-    
     if (difference === 0) {
       return "< 1";
     } else if (difference < 60) {
-      return <>{difference}<div className="text-xs xl:text-sm">min</div></>;
+      return (
+        <>
+          {difference}
+          <div className="text-xs xl:text-sm">min</div>
+        </>
+      );
     } else {
-      const hours = Math.floor(difference / 60)
-      const minutes = difference % 60
-      return <>{hours}<div className="text-xs xl:text-sm">h</div>{minutes.toString().padStart(2,"0")}<div className="text-xs xl:text-sm">min</div></>;
+      const hours = Math.floor(difference / 60);
+      const minutes = difference % 60;
+      return (
+        <>
+          {hours}
+          <div className="text-xs xl:text-sm">h</div>
+          {minutes.toString().padStart(2, "0")}
+          <div className="text-xs xl:text-sm">min</div>
+        </>
+      );
     }
   };
 
