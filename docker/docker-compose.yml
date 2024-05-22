@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db_setup:
+    build:
+      context: ../backend-database
+      dockerfile: db_setup.Dockerfile
+    volumes:
+      - ../backend-database/tablica.db:/usr/local/app/tablica.db
+
+  db_refresh:
+    build:
+      context: ../backend-database
+      dockerfile: db.Dockerfile
+    volumes:
+      - ../backend-database/tablica.db:/usr/local/app/tablica.db
+
+  backend:
+    build:
+      context: ../backend-database
+      dockerfile: backend.Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../backend-database/tablica.db:/usr/local/app/tablica.db
+
+  frontend:
+    build:
+      context: ../timetable-web
+      dockerfile: frontend.Dockerfile
+    ports:
+      - "4173:4173"
+
+volumes:
+  db_data:
