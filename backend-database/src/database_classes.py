@@ -175,12 +175,12 @@ class DatabaseFacade:
 
 # Insert another row to the przystanki table
     def add_stop(self, stop):
-        self.execute_and_commit(f'INSERT INTO przystanki VALUES(?)', (stop))
+        self.execute_and_commit(f'INSERT INTO przystanki VALUES (?, ?, ?, ?, ?, ?, ?, strftime("%Y-%m-%d %H:%M:%f", ?), ?)', (stop[0], stop[1], stop[2], stop[3], stop[4], stop[5], stop[6], stop[7], stop[8]))
 
 # Remove a stop by id
     def remove_stop(self, stop_id):
-        self.execute_and_commit(f'DELETE FROM przystanki WHERE id = ?', (stop_id))
+        self.execute_and_commit(f'DELETE FROM przystanki WHERE wewnętrzne_id = ?', (stop_id,))
 
 # Change the value of the 'Aktywny" status of a stop
     def set_active_inactive(self, stop_id, new_status):
-        self.execute_and_commit(f'UPDATE przystanki SET aktywny = ? WHERE id = ?', (new_status, stop_id))
+        self.execute_and_commit(f'UPDATE przystanki SET aktywny = ? WHERE wewnętrzne_id = ?', (new_status, stop_id))

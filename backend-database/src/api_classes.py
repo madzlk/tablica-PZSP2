@@ -132,7 +132,7 @@ class ApiAdapter:
             stop_geo_2 = self.v(stop_response[5])
             stop_destination = self.v(stop_response[6])
             stop_start_date = self.v(stop_response[7])
-            stop_data = (int(stop_id), stop_name, float(stop_geo_1), float(stop_geo_2), stop_destination, stop_start_date)
+            stop_data = (stop_id, stop_name, float(stop_geo_1), float(stop_geo_2), stop_destination, stop_start_date)
             stops.append(stop_data)
         return stops
 
