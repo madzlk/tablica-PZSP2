@@ -4,11 +4,14 @@ from datetime import datetime
 
 # Nothing to test here, this is purely for better structure, it doesn't
 # do anything on it's own, just calls appropriate methods of the other classes.
+def get_key():
+    f = open(".env", "r")
+    return f.read()
 
 # This is the class that manages how the rest of the program interacts.
 class Orchestrator:
     def __init__(self, logger) -> None:
-        self.api_face = ApiFacade('fa0f3d27-bfbe-40b4-8e77-1b279b68f627', ApiAdapter())
+        self.api_face = ApiFacade(get_key(), ApiAdapter())
         self.data_face = DatabaseFacade('tablica.db', DatabaseAdapter())
         self.data_observ = DataObserver()
         self.data_observ.add_subscriber(self.data_face)
