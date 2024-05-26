@@ -8,7 +8,7 @@ services:
       context: ../backend-database
       dockerfile: db_setup.Dockerfile
     volumes:
-      - ../backend-database/tablica.db:/usr/local/app/tablica.db
+      - ../backend-database/src/tablica.db:/usr/local/app/tablica.db
 
   db_refresh:
     depends_on:
@@ -19,7 +19,7 @@ services:
       context: ../backend-database
       dockerfile: db.Dockerfile
     volumes:
-      - ../backend-database/tablica.db:/usr/local/app/tablica.db
+      - ../backend-database/src/tablica.db:/usr/local/app/tablica.db
 
   backend:
     depends_on:
@@ -32,7 +32,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ../backend-database/tablica.db:/usr/local/app/tablica.db
+      - ../backend-database/src/tablica.db:/usr/local/app/tablica.db
 
   frontend:
     depends_on:
