@@ -4,6 +4,4 @@
 # Ignore the virtual environment directory
 .venv/
 
-/docs/build
-
 /backend-database/src/tablica.db
