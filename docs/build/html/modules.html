@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>backend-database &mdash; Tablica-PZSP2 v1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5cb08e4e"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Databse/API" href="src.html" />
+    <link rel="prev" title="Welcome to Tablica-PZSP2’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Tablica-PZSP2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">backend-database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.html">Databse/API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">Testing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_run.html">User manual</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Tablica-PZSP2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">backend-database</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="backend-database">
+<h1>backend-database<a class="headerlink" href="#backend-database" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.html">Databse/API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.html#src-folder">src folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-api_classes">src.api_classes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.html#api_classes.ApiAdapter"><code class="docutils literal notranslate"><span class="pre">ApiAdapter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.ApiAdapter.fix_time"><code class="docutils literal notranslate"><span class="pre">ApiAdapter.fix_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.ApiAdapter.parse_api_lines"><code class="docutils literal notranslate"><span class="pre">ApiAdapter.parse_api_lines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.ApiAdapter.parse_api_stops"><code class="docutils literal notranslate"><span class="pre">ApiAdapter.parse_api_stops()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.ApiAdapter.parse_api_timetables"><code class="docutils literal notranslate"><span class="pre">ApiAdapter.parse_api_timetables()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.ApiAdapter.v"><code class="docutils literal notranslate"><span class="pre">ApiAdapter.v()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#api_classes.ApiFacade"><code class="docutils literal notranslate"><span class="pre">ApiFacade</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.ApiFacade.get_all_stops"><code class="docutils literal notranslate"><span class="pre">ApiFacade.get_all_stops()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.ApiFacade.get_line_timetable"><code class="docutils literal notranslate"><span class="pre">ApiFacade.get_line_timetable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.ApiFacade.get_lines_for_stop"><code class="docutils literal notranslate"><span class="pre">ApiFacade.get_lines_for_stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.ApiFacade.get_lines_for_stops"><code class="docutils literal notranslate"><span class="pre">ApiFacade.get_lines_for_stops()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.ApiFacade.get_timetables_for_stops"><code class="docutils literal notranslate"><span class="pre">ApiFacade.get_timetables_for_stops()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#api_classes.CouldNotConnect"><code class="docutils literal notranslate"><span class="pre">CouldNotConnect</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#api_classes.DataObserver"><code class="docutils literal notranslate"><span class="pre">DataObserver</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.DataObserver.add_subscriber"><code class="docutils literal notranslate"><span class="pre">DataObserver.add_subscriber()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.DataObserver.check_for_change"><code class="docutils literal notranslate"><span class="pre">DataObserver.check_for_change()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.DataObserver.prepare_hash"><code class="docutils literal notranslate"><span class="pre">DataObserver.prepare_hash()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#api_classes.DataObserver.update"><code class="docutils literal notranslate"><span class="pre">DataObserver.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#api_classes.IncorrectApiCall"><code class="docutils literal notranslate"><span class="pre">IncorrectApiCall</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-api_declaration">src.api_declaration module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.html#api_declaration.read_stops"><code class="docutils literal notranslate"><span class="pre">read_stops()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#api_declaration.read_times"><code class="docutils literal notranslate"><span class="pre">read_times()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-database_classes">src.database_classes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.html#database_classes.DatabaseAdapter"><code class="docutils literal notranslate"><span class="pre">DatabaseAdapter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseAdapter.parse_database_stop_ids"><code class="docutils literal notranslate"><span class="pre">DatabaseAdapter.parse_database_stop_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseAdapter.parse_times"><code class="docutils literal notranslate"><span class="pre">DatabaseAdapter.parse_times()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseAdapter.turn_timetables_into_query"><code class="docutils literal notranslate"><span class="pre">DatabaseAdapter.turn_timetables_into_query()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#database_classes.DatabaseError"><code class="docutils literal notranslate"><span class="pre">DatabaseError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#database_classes.DatabaseFacade"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.add_stop"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.add_stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.execute_and_commit"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.execute_and_commit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.fetchall_query"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.fetchall_query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.get_active_stops"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.get_active_stops()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.get_active_stops_ids"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.get_active_stops_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.get_n_next_times"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.get_n_next_times()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.get_stops"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.get_stops()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.get_stops_hash"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.get_stops_hash()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.get_timetables"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.get_timetables()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.get_timetables_hash"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.get_timetables_hash()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.remove_stop"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.remove_stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.set_active_inactive"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.set_active_inactive()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.update_data"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.update_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#database_classes.DatabaseFacade.update_time"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade.update_time()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-main">src.main module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.html#main.Logger"><code class="docutils literal notranslate"><span class="pre">Logger</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.html#main.Logger.log"><code class="docutils literal notranslate"><span class="pre">Logger.log()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-orchestrator">src.orchestrator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.html#orchestrator.Orchestrator"><code class="docutils literal notranslate"><span class="pre">Orchestrator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.html#orchestrator.Orchestrator.data_collection_cycle"><code class="docutils literal notranslate"><span class="pre">Orchestrator.data_collection_cycle()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#orchestrator.get_key"><code class="docutils literal notranslate"><span class="pre">get_key()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#src-setup-db-module">src.setup_db module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-test_api_classes">src folder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#test_api_classes.TestApiAdapter"><code class="docutils literal notranslate"><span class="pre">TestApiAdapter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestApiAdapter.test_fix_time_no_changes_needed"><code class="docutils literal notranslate"><span class="pre">TestApiAdapter.test_fix_time_no_changes_needed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestApiAdapter.test_fix_time_no_leading_zero"><code class="docutils literal notranslate"><span class="pre">TestApiAdapter.test_fix_time_no_leading_zero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestApiAdapter.test_fix_time_past_midnight"><code class="docutils literal notranslate"><span class="pre">TestApiAdapter.test_fix_time_past_midnight()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestApiAdapter.test_parse_api_lines"><code class="docutils literal notranslate"><span class="pre">TestApiAdapter.test_parse_api_lines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestApiAdapter.test_parse_api_stops"><code class="docutils literal notranslate"><span class="pre">TestApiAdapter.test_parse_api_stops()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestApiAdapter.test_parse_api_timetables"><code class="docutils literal notranslate"><span class="pre">TestApiAdapter.test_parse_api_timetables()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#test_api_classes.TestDataObserver"><code class="docutils literal notranslate"><span class="pre">TestDataObserver</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestDataObserver.test_another_change"><code class="docutils literal notranslate"><span class="pre">TestDataObserver.test_another_change()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestDataObserver.test_hashing_diff_data"><code class="docutils literal notranslate"><span class="pre">TestDataObserver.test_hashing_diff_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestDataObserver.test_hashing_same_data"><code class="docutils literal notranslate"><span class="pre">TestDataObserver.test_hashing_same_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestDataObserver.test_initial_data_in"><code class="docutils literal notranslate"><span class="pre">TestDataObserver.test_initial_data_in()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_api_classes.TestDataObserver.test_no_change"><code class="docutils literal notranslate"><span class="pre">TestDataObserver.test_no_change()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-test_database_classes">src.test_database_classes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#test_database_classes.TestDatabaseAdapter"><code class="docutils literal notranslate"><span class="pre">TestDatabaseAdapter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_database_classes.TestDatabaseAdapter.test_parse_database_stop_ids"><code class="docutils literal notranslate"><span class="pre">TestDatabaseAdapter.test_parse_database_stop_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_database_classes.TestDatabaseAdapter.test_parse_times"><code class="docutils literal notranslate"><span class="pre">TestDatabaseAdapter.test_parse_times()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#test_database_classes.TestDatabaseAdapter.test_turn_timetables_into_query"><code class="docutils literal notranslate"><span class="pre">TestDatabaseAdapter.test_turn_timetables_into_query()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Tablica-PZSP2’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="src.html" class="btn btn-neutral float-right" title="Databse/API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Magdalena Dudek, Franciszek Malewski, Stanisław Sikorksi, Paweł Rogóż.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
