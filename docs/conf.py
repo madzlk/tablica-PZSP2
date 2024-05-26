@@ -6,37 +6,28 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here.
-import pathlib
 import sys
-sys.path.insert(0, str(pathlib.Path(__file__).parents[2].resolve()))
+import os
 
-project = 'tablica'
-copyright = '2024, Magdalena Dudek'
-author = 'Magdalena Dudek'
-release = '0.1'
+sys.path.insert(0, os.path.abspath("../backend-database/src/"))
+
+project = 'Tablica-PZSP2'
+copyright = '2024, Magdalena Dudek, Franciszek Malewski, Stanisław Sikorksi, Paweł Rogóż'
+author = 'Magdalena Dudek, Franciszek Malewski, Stanisław Sikorksi, Paweł Rogóż'
+release = 'v1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = [
-    'sphinx.ext.duration',
-    'sphinx.ext.doctest',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
-
-
-]
+extensions = ['sphinx.ext.autodoc', "sphinx.ext.viewcode"]
 
 templates_path = ['_templates']
-exclude_patterns = []
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-language = 'pl'
+
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'furo'
+html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-
