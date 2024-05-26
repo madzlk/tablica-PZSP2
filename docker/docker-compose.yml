@@ -2,6 +2,8 @@ version: '3'
 
 services:
   db_setup:
+    environment:
+      - TZ=Europe/Warsaw
     build:
       context: ../backend-database
       dockerfile: db_setup.Dockerfile
@@ -9,6 +11,10 @@ services:
       - ../backend-database/tablica.db:/usr/local/app/tablica.db
 
   db_refresh:
+    depends_on:
+      - db_setup
+    environment:
+      - TZ=Europe/Warsaw
     build:
       context: ../backend-database
       dockerfile: db.Dockerfile
@@ -16,6 +22,10 @@ services:
       - ../backend-database/tablica.db:/usr/local/app/tablica.db
 
   backend:
+    depends_on:
+      - db_refresh
+    environment:
+      - TZ=Europe/Warsaw
     build:
       context: ../backend-database
       dockerfile: backend.Dockerfile
@@ -25,11 +35,12 @@ services:
       - ../backend-database/tablica.db:/usr/local/app/tablica.db
 
   frontend:
+    depends_on:
+      - backend
+    environment:
+      - TZ=Europe/Warsaw
     build:
       context: ../timetable-web
       dockerfile: frontend.Dockerfile
     ports:
-      - "4173:4173"
-
-volumes:
-  db_data:
+      - "5173:5173"
