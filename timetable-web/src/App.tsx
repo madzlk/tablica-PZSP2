@@ -2,14 +2,8 @@ import { useEffect, useState } from "react";
 import { TransitStop } from "./types/TransitStop";
 import { TransitStopComponent } from "./components/TransitStopComponent";
 import { StopsMapComponent } from "./components/StopsMapComponent";
-import { StopsMap } from "./types/StopsMap";
 import stopsService from "./services/stops";
 
-// const mapSettings: StopsMap = {
-//   zoom: 16,
-//   centerLat: 52.21858,
-//   centerLng: 21.013381991779095
-// }
 
 function App() {
   const [stops, setStops] = useState<TransitStop[]>([]);
@@ -63,11 +57,10 @@ function App() {
           stops.length < 13 ? "2" : "3"
         } horizontal:grid-cols-4 horizontal:p-2 gap-3 mx-4`}
       >
-        {stops.map((item, index) => (
+        {stops.map(stop => (
           <TransitStopComponent
-            key={item.id}
-            stop={item}
-            componentId={index + 1}
+            key={stop.id}
+            stop={stop}
             stops={stops}
           />
         ))}

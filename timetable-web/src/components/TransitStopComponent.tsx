@@ -7,11 +7,10 @@ import { BiWalk } from "react-icons/bi";
 
 interface Props {
   stop: TransitStop;
-  componentId: number;
   stops: TransitStop[];
 }
 
-export const TransitStopComponent = ({ stop, componentId, stops }: Props) => {
+export const TransitStopComponent = ({ stop, stops }: Props) => {
   const [departures, setDepartures] = useState<Departure[]>([]);
 
   useEffect(() => {
