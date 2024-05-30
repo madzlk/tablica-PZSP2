@@ -1,21 +1,22 @@
 import { TransitStop } from "../types/TransitStop";
 import { DepartureComponent } from "./DepartureComponent";
 import { useEffect, useState } from "react";
-import stops from "../services/stops";
+import stopsService from "../services/stops";
 import { Departure } from "../types/Departure";
 import { BiWalk } from "react-icons/bi";
 
 interface Props {
   stop: TransitStop;
   componentId: number;
+  stops: TransitStop[];
 }
 
-export const TransitStopComponent = ({ stop, componentId }: Props) => {
+export const TransitStopComponent = ({ stop, componentId, stops }: Props) => {
   const [departures, setDepartures] = useState<Departure[]>([]);
 
   useEffect(() => {
     const fetchData = () => {
-      stops.getTimesForStop(stop.id, 6).then((data) => setDepartures(data));
+      stopsService.getTimesForStop(stop.id, 6).then((data) => setDepartures(data));
     };
 
     fetchData();
@@ -26,7 +27,7 @@ export const TransitStopComponent = ({ stop, componentId }: Props) => {
     }, 60 * 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [stops]);
 
   return (
     <div className="flex flex-col bg-[#B49FAA] text-nowrap leading-tight">

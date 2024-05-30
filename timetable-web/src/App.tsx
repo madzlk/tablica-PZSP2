@@ -14,14 +14,43 @@ import stopsService from "./services/stops";
 function App() {
   const [stops, setStops] = useState<TransitStop[]>([]);
 
+  // compare stops ids and return true if they are equal or false if they are not
+  const areIdsEqual = (fetchedStops: TransitStop[], currentStops: TransitStop[]): boolean => {
+    const fetchedIds = new Set(fetchedStops.map(stop => stop.id));
+    const currentIds = new Set(currentStops.map(stop => stop.id));
+
+    if (fetchedIds.size !== currentIds.size) return false;
+
+    for(let id of fetchedIds) {
+      if (!currentIds.has(id)) return false;
+    }
+
+    return true;
+  };
+
   useEffect(() => {
-    stopsService
-      .getAllStops()
-      .then((data) => {
-        data = stopsService.adjustDistances(data);
-        setStops(data);
-      })
-      .catch((error) => console.error(error));
+    const fetchData = () => {
+      stopsService
+        .getAllStops()
+        .then((data) => {
+          if (!areIdsEqual(data, stops)) {
+            data = stopsService.adjustDistances(data);
+            setStops(data);
+          } else {
+            console.log('Stops are the same')
+          }
+        })
+        .catch((error) => console.error(error));
+    };
+
+    fetchData();
+
+    const interval = setInterval(() => {
+      console.log("Fetching stops");
+      fetchData();
+    }, 60 * 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -39,6 +68,7 @@ function App() {
             key={item.id}
             stop={item}
             componentId={index + 1}
+            stops={stops}
           />
         ))}
       </div>
