@@ -5,3 +5,4 @@
 .venv/
 
 /backend-database/src/tablica.db
+/backend-database/src/.env
