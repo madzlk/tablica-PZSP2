@@ -54,15 +54,22 @@ tworzy strukturę bazy danych i zapisuje ją w pliku 'tablica.db';
 w tym pliku będą notowane wszystkie ewentualne zmiany w bazie danych.
 
 Jeżeli setup_db.py odpalimy jeszcze raz, wymarzemy zawartość wszystkich tabel w bazie.
+
 2. `chmod +x startup.sh`
+
 3. W folderze /etc/systemd/user trzeba umieścić plik **tablica.service**. Pod ExecStart musi być podana ścieżka do pliku **startup.sh** (tutaj zakładamy że pliki aplikacji są w katalogu domowym użytkownika tablica).
+
 4. `sudo systemctl daemon-reload`
+
 5. `systemctl --user enable tablica.service` włącza nowo zdefiniowaną usługę
+
 6. `systemctl --user start tablica.service` uruchomi usługę.Powinien zostać uruchomiony docker compose a następnie firefox pod URL aplikacji.
      - Jeżeli aplikacja się nie uruchomi:
        - Logi wykonania skryptu znajdą się w tym folderze w pliku logs.txt.
        - Za pomocą komendy `systemctl --user status tablica.service` można zobaczyć co stało się z tablica.service.
        - Można spróbować uruchomić sam skrypt startup.sh i szukać przyczyn błędu.
      - Jeżeli aplikacja się uruchomi to powinna działać też przy uruchomieniu systemu, jeżeli tak nie działa to także można skorzystać z metod podanych wcześniej.
+
 7. W pliku /etc/default/apport zmienić wartość enabled na 0 aby komunikaty o błędach systemu nie wyświetlały się nad aplikacją
+
 8. Można zmienić screen blank na never żeby ekran się nie wygaszał.
