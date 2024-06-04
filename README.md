@@ -6,39 +6,38 @@ Celem projektu jest zapewnienie oprogramowania umożliwiającego wyświetlanie i
 
 # Uruchamianie
 
-Przed uruchomieniem:
-
-1. W folderze timetable-web/ należy utworzyć plik **.env**, a w nim umieścić linijke: `VITE_MAPS_API_KEY=klucz`, klucz należy wygenerować przez (https://developers.google.com/maps/third-party-platforms/wordpress/generate-api-key?hl=pl)[GoogleMapsPlatform].
-2. W folderze backend-database/src należy utworzyć plik **.env** zawierający samą wartość klucza do (https://api.um.warszawa.pl./)[APImiasta]; klucz zostanie udostępniony po założeniu konta.
-
 ## Lokalnie
 
-1. Stwórz wirtualne środowisko za pomocą komendy `python -m venv tablica`,
+1. W folderze timetable-web/ należy utworzyć plik **.env**, a w nim umieścić linijke: `VITE_MAPS_API_KEY=klucz`, klucz należy wygenerować przez (https://developers.google.com/maps/third-party-platforms/wordpress/generate-api-key?hl=pl)[GoogleMapsPlatform].
+
+2. W folderze backend-database/src należy utworzyć plik **.env** zawierający samą wartość klucza do (https://api.um.warszawa.pl./)[APImiasta]; klucz zostanie udostępniony po założeniu konta.
+
+3. Stwórz wirtualne środowisko za pomocą komendy `python -m venv tablica`,
    następnie uruchom wirtualne środowisko przez komendy:
 
 - Windows: `.\tablica\Scripts\activate`
 - Linux/MacOS: `source tablica/bin/activate`
 
-2. Instalujemy pakiety z pliku /backend-database/src/requirements.txt,
+4. Instalujemy pakiety z pliku /backend-database/src/requirements.txt,
    za pomocą komendy `pip install -r requirements.txt`
 
-3. **Za pierwszym razem** należy odpalić skrypt
+5. **Za pierwszym razem** należy odpalić skrypt
    `python3 setup_db.py`
    tworzy strukturę bazy danych i zapisuje ją w pliku 'tablica.db';
    w tym pliku będą notowane wszystkie ewentualne zmiany w bazie danych.
 
 Jeżeli setup_db.py odpalimy jeszcze raz, wymarzemy zawartość wszystkich tabel w bazie.
 
-4. Po stworzeniu bazy danych, co dzieje się raz, pierwszym programem który odpalamy jest
+6. Po stworzeniu bazy danych, co dzieje się raz, pierwszym programem który odpalamy jest
    `python3 main.py`
    będzie on w nieskończonej pętli pobierał nowe dane z API co minute, i jeżeli dane się zmienią
    (względem tych zapisanych w bazie) to je podmieni.
 
-5. W kolejnym terminalu (pamiętaj o aktywowaniu wirtualnego środowisko pkt.1) stawiamy Fast api przy pomocy uvicorna, bo jest prosto.
+7. W kolejnym terminalu (pamiętaj o aktywowaniu wirtualnego środowisko pkt.1) stawiamy Fast api przy pomocy uvicorna, bo jest prosto.
    `uvicorn api_declaration:fast_api`
    powinniśmy dostać w terminalu wiadomość że wszystko jest cacy, i na 127.0.0.1:8000 mamy dostępne nasze call'e.
 
-6. Kolejny terminal posłuży do uruchomienia frontendu.
+8. Kolejny terminal posłuży do uruchomienia frontendu.
 
    Przed rozruchem, musimy dokonać małych zmian w konfiguracji.
    W pliku `tablica-PZSP2/timetable-web/vite.config.ts`, należy podmienić  
@@ -55,14 +54,18 @@ dostępny będzie pod adresem http://localhost:5173/,a backend pod adresem http:
 
 # Odpalenie skonteneryzowanego systemu
 
-1. **Za pierwszym razem** należy odpalić skrypt
+1. W folderze timetable-web/ należy utworzyć plik **.env**, a w nim umieścić linijke: `VITE_MAPS_API_KEY=klucz`, klucz należy wygenerować przez (https://developers.google.com/maps/third-party-platforms/wordpress/generate-api-key?hl=pl)[GoogleMapsPlatform].
+
+2. W folderze backend-database/src należy utworzyć plik **.env** zawierający samą wartość klucza do (https://api.um.warszawa.pl./)[APImiasta]; klucz zostanie udostępniony po założeniu konta.
+
+3. **Za pierwszym razem** należy odpalić skrypt
    `python3 setup_db.py`
    tworzy strukturę bazy danych i zapisuje ją w pliku 'tablica.db';
    w tym pliku będą notowane wszystkie ewentualne zmiany w bazie danych.
 
 Jeżeli setup_db.py odpalimy jeszcze raz, wymarzemy zawartość wszystkich tabel w bazie.
 
-2. Z poziomu folderu docker, należy wykonać komende
+4. Z poziomu folderu docker, należy wykonać komende
    `docker-compose up --build` (założono instalacje Docker/Docker Compose we własnym zakresie)
    bądź uruchomić skrypt ``cleanup.sh`
 
