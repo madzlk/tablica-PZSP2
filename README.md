@@ -1,4 +1,4 @@
-# Tablica informacyjna
+# Tablica odjazdów
 
 ![image](https://github.com/madzlk/tablica-PZSP2/assets/70140679/7b932f9c-8778-473e-9847-4e532dad168a)
 
