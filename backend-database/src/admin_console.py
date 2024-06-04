@@ -16,7 +16,7 @@ class Square():
         self.min_lat = min_lat
         self.max_lon = max_lon
         self.min_lon = min_lon
-    
+
     def check_if_in(self, lat, lon):
         if self.max_lat>=lat>=self.min_lat and self.max_lon>=lon>=self.min_lon:
             return True
@@ -140,14 +140,14 @@ class AdminConsole():
         dist = input('Please enter the walking distance of the stop\n')
         new_stop_data = (int(stop_to_add[0]), int(new_id), stop_to_add[1], float(stop_to_add[2]), float(stop_to_add[3]), int(dist), stop_to_add[4], str(datetime.now()), '1')
         confirm = input(f'Please confirm if the stop data is correct (Y/N):\n{new_stop_data}\n')
-        if confirm == "Y":
+        if confirm.upper() == 'Y':
             self.db_face.add_stop(new_stop_data)
-        if confirm == "N":
+        elif confirm.upper() == 'N':
             return
         else:
             input('incorrect option, press enter to continue.')
             return
-        
+
     def choose_stop_to_add(self, stops):
         print('Found stops:')
         self.print_new_stops(stops)
