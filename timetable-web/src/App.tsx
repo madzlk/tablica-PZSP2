@@ -13,6 +13,7 @@ function App() {
     const fetchedIds = new Set(fetchedStops.map(stop => stop.id));
     const currentIds = new Set(currentStops.map(stop => stop.id));
 
+    if (fetchedIds.size == 0) return true;
     if (fetchedIds.size !== currentIds.size) return false;
 
     for(let id of fetchedIds) {
