@@ -8,8 +8,8 @@ Celem projektu jest zapewnienie oprogramowania umożliwiającego wyświetlanie i
 
 Przed uruchomieniem:
 
-1. W folderze timetable-web/ należy utworzyć plik **.env**, a w nim umieścić linijke: `VITE_MAPS_API_KEY=klucz`, klucz należy wygenerować przez [https://developers.google.com/maps/third-party-platforms/wordpress/generate-api-key?hl=pl](Google%20Maps%20Platform).
-2. W folderze backend-database/src należy utworzyć plik **.env** zawierający samą wartość klucza do [https://api.um.warszawa.pl./](API%20miasta); klucz zostanie udostępniony po założeniu konta.
+1. W folderze timetable-web/ należy utworzyć plik **.env**, a w nim umieścić linijke: `VITE_MAPS_API_KEY=klucz`, klucz należy wygenerować przez (https://developers.google.com/maps/third-party-platforms/wordpress/generate-api-key?hl=pl)[Google Maps Platform].
+2. W folderze backend-database/src należy utworzyć plik **.env** zawierający samą wartość klucza do (https://api.um.warszawa.pl./)[API miasta]; klucz zostanie udostępniony po założeniu konta.
 
 ## Lokalnie
 
@@ -19,32 +19,32 @@ Przed uruchomieniem:
 - Windows: `.\tablica\Scripts\activate`
 - Linux/MacOS: `source tablica/bin/activate`
 
-1. Instalujemy pakiety z pliku /backend-database/src/requirements.txt,
+2. Instalujemy pakiety z pliku /backend-database/src/requirements.txt,
    za pomocą komendy `pip install -r requirements.txt`
 
-1. **Za pierwszym razem** należy odpalić skrypt
+3. **Za pierwszym razem** należy odpalić skrypt
    `python3 setup_db.py`
    tworzy strukturę bazy danych i zapisuje ją w pliku 'tablica.db';
    w tym pliku będą notowane wszystkie ewentualne zmiany w bazie danych.
 
 Jeżeli setup_db.py odpalimy jeszcze raz, wymarzemy zawartość wszystkich tabel w bazie.
 
-3. Po stworzeniu bazy danych, co dzieje się raz, pierwszym programem który odpalamy jest
+4. Po stworzeniu bazy danych, co dzieje się raz, pierwszym programem który odpalamy jest
    `python3 main.py`
    będzie on w nieskończonej pętli pobierał nowe dane z API co minute, i jeżeli dane się zmienią
    (względem tych zapisanych w bazie) to je podmieni.
 
-4. W kolejnym terminalu (pamiętaj o aktywowaniu wirtualnego środowisko pkt.1) stawiamy Fast api przy pomocy uvicorna, bo jest prosto.
+5. W kolejnym terminalu (pamiętaj o aktywowaniu wirtualnego środowisko pkt.1) stawiamy Fast api przy pomocy uvicorna, bo jest prosto.
    `uvicorn api_declaration:fast_api`
    powinniśmy dostać w terminalu wiadomość że wszystko jest cacy, i na 127.0.0.1:8000 mamy dostępne nasze call'e.
 
-5. Kolejny terminal posłuży do uruchomienia frontendu.
+6. Kolejny terminal posłuży do uruchomienia frontendu.
 
-   Zanim dokonamy rozruchu, musimy dokonać małych zmian w konfiguracji.
+   Przed rozruchem, musimy dokonać małych zmian w konfiguracji.
    W pliku `tablica-PZSP2/timetable-web/vite.config.ts`, należy podmienić  
    wartość klucza target na `http://127.0.0.1:8000`, zgodnie z komentarzami.
 
-   Zaczynamy od instalacji modułów `npm install`,
+   Zaczynamy od instalacji modułów `npm install` (założono instalacje Node JS we własnym zakresie),
    a następnie uruchmiamy frontend za pomocą `npm run dev`
    W przypadku błędów należy upenwić się, że zostały zainstalowane odpowiednie pakiety
 
