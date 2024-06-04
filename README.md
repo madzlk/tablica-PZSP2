@@ -8,8 +8,8 @@ Celem projektu jest zapewnienie oprogramowania umożliwiającego wyświetlanie i
 
 Przed uruchomieniem:
 
-1. W folderze timetable-web/ należy utworzyć plik **.env**, a w nim umieścić linijke: `VITE_MAPS_API_KEY=klucz`, klucz należy wygenerować przez [https://developers.google.com/maps/third-party-platforms/wordpress/generate-api-key?hl=pl](Google Maps Platform).
-2. W folderze backend-database/src należy utworzyć plik **.env** zawierający samą wartość klucza do [https://api.um.warszawa.pl./](API miasta); klucz zostanie udostępniony po założeniu konta.
+1. W folderze timetable-web/ należy utworzyć plik **.env**, a w nim umieścić linijke: `VITE_MAPS_API_KEY=klucz`, klucz należy wygenerować przez [https://developers.google.com/maps/third-party-platforms/wordpress/generate-api-key?hl=pl](Google%20Maps%20Platform).
+2. W folderze backend-database/src należy utworzyć plik **.env** zawierający samą wartość klucza do [https://api.um.warszawa.pl./](API%20miasta); klucz zostanie udostępniony po założeniu konta.
 
 ## Lokalnie
 
