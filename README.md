@@ -1,4 +1,8 @@
-# Tablica informacyjna
+# Tablica odjazdów
+
+![image](https://github.com/madzlk/tablica-PZSP2/assets/70140679/7b932f9c-8778-473e-9847-4e532dad168a)
+
+
 Celem projektu jest zapewnienie oprogramowania umożliwiającego wyświetlanie informacji dotyczących komunikacji miejskiej dla przystanków zlokalizowanych w okolicy WeiTI, włączając w to czasy odjazdów. Na ekranie (np. w formie monitora o proporcjach 21:9 w orientacji pionowej) zostanie wyświetlona mapka (np. z Google Maps lub OpenStreetMap) przedstawiająca budynek Wydziału oraz przystanki tramwajowe i autobusowe, takie jak Plac Politechniki 1, Plac Politechniki 2, Metro Politechnika 1, Metro Politechnika 2, itp., wraz z szacowanym czasem dotarcia na piechotę. Poniżej lub obok mapki znajdzie się lista środków transportu oraz godziny odjazdów.
 
 # Uruchamianie
