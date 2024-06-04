@@ -12,11 +12,33 @@ W tej instrukcji opisany jest sposób konfiguracji automatycznego uruchamiania t
 6. W folderze /etc/systemd/user trzeba umieścić plik **tablica.service**. Pod ExecStart musi być podana ścieżka do pliku **startup.sh** (tutaj zakładamy że pliki aplikacji są w katalogu domowym użytkownika tablica).
 7. `sudo systemctl daemon-reload`
 8. `systemctl --user enable tablica.service` włącza nowo zdefiniowaną usługę
-9. `systemctl --user start tablica.service` uruchomi usługę.Powinien zostać uruchomiony docker compose a następnie firefox pod URL aplikacji.
+9.  `systemctl --user start tablica.service` uruchomi usługę.Powinien zostać uruchomiony docker compose a następnie firefox pod URL aplikacji.
      - Jeżeli aplikacja się nie uruchomi:
        - Logi wykonania skryptu znajdą się w tym folderze w pliku logs.txt.
        - Za pomocą komendy `systemctl --user status tablica.service` można zobaczyć co stało się z tablica.service.
        - Można spróbować uruchomić sam skrypt startup.sh i szukać przyczyn błędu.
      - Jeżeli aplikacja się uruchomi to powinna działać też przy uruchomieniu systemu, jeżeli tak nie działa to także można skorzystać z metod podanych wcześniej.
-10. W pliku /etc/default/apport zmienić wartość enabled na 0 aby komunikaty o błędach systemu nie wyświetlały się nad aplikacją
-11. Można zmienić screen blank na never żeby ekran się nie wygaszał.
+10. **Watchdog**
+    1. `sudo apt install watchdog`
+    2. `sudo modprobe softdog`
+    3. `sudo nano /etc/default/watchdog` i ustawić w pliku takie opcje:
+         ```
+          # Start watchdog at boot time? 0 or 1
+          run_watchdog=1
+          # Load module before starting watchdog
+          watchdog_module="softdog"
+          # Specify additional watchdog options here (see manpage).
+          watchdog_options="-b"
+         ```
+    4. `sudo nano /etc/watchdog.conf` i upewnić się że tak wyglądają jedyne niezakomentowane linijki:
+         ```
+          watchdog-device = /dev/watchdog
+          realtime = yes
+          priority = 1
+         ```
+     5. **Uwaga: ta komenda zrestartuje system -** Jeżeli wpiszemy `sudo kill -STOP $(cat /var/run/watchdog.pid)`, zakłóci to prace watchdoga i po 60 sekundach nastąpi restart systemu, co udowodni że watchdog działa.
+
+
+11. W pliku /etc/default/apport zmienić wartość enabled na 0 aby komunikaty o błędach systemu nie wyświetlały się nad aplikacją
+12. Można zmienić screen blank na never żeby ekran się nie wygaszał.
+
