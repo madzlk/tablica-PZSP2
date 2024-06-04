@@ -2,18 +2,7 @@ version: '3'
 
 services:
 
-  db_setup:
-    environment:
-      - TZ=Europe/Warsaw
-    build:
-      context: ../backend-database
-      dockerfile: db_setup.Dockerfile
-    volumes:
-      - ../backend-database/src/tablica.db:/usr/local/app/tablica.db
-
   db_refresh:
-    depends_on:
-      - db_setup
     environment:
       - TZ=Europe/Warsaw
     build:

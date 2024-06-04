@@ -1,0 +1,11 @@
+[Unit]
+Description=Serwis uruchamiajacy tablice
+PartOf=graphical-session.target
+After=graphical-session.target x
+
+[Service]
+ExecStart=/home/tablica/tablica-PZSP2/boot/startup.sh
+Type=oneshot
+
+[Install]
+WantedBy=graphical-session.target
