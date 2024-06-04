@@ -4,18 +4,20 @@ import { TransitStopComponent } from "./components/TransitStopComponent";
 import { StopsMapComponent } from "./components/StopsMapComponent";
 import stopsService from "./services/stops";
 
-
 function App() {
   const [stops, setStops] = useState<TransitStop[]>([]);
 
   // compare stops ids and return true if they are equal or false if they are not
-  const areIdsEqual = (fetchedStops: TransitStop[], currentStops: TransitStop[]): boolean => {
-    const fetchedIds = new Set(fetchedStops.map(stop => stop.id));
-    const currentIds = new Set(currentStops.map(stop => stop.id));
+  const areIdsEqual = (
+    fetchedStops: TransitStop[],
+    currentStops: TransitStop[]
+  ): boolean => {
+    const fetchedIds = new Set(fetchedStops.map((stop) => stop.id));
+    const currentIds = new Set(currentStops.map((stop) => stop.id));
 
     if (fetchedIds.size !== currentIds.size) return false;
 
-    for(let id of fetchedIds) {
+    for (let id of fetchedIds) {
       if (!currentIds.has(id)) return false;
     }
 
@@ -31,7 +33,7 @@ function App() {
             data = stopsService.adjustDistances(data);
             setStops(data);
           } else {
-            console.log('Stops are the same')
+            console.log("Stops are the same");
           }
         })
         .catch((error) => console.error(error));
@@ -53,16 +55,12 @@ function App() {
         <StopsMapComponent mapStops={{ stops: stops }} />
       </div>
       <div
-        className={`h-[74%] horizontal:h-full horizontal:w-[74%] grid grid-cols-${
-          stops.length < 13 ? "2" : "3"
+        className={`h-[74%] horizontal:h-full horizontal:w-[74%] grid grid-cols-2 ${
+          stops.length > 12 ? "grid-cols-3" : ""
         } horizontal:grid-cols-4 horizontal:p-2 gap-3 mx-4`}
       >
-        {stops.map(stop => (
-          <TransitStopComponent
-            key={stop.id}
-            stop={stop}
-            stops={stops}
-          />
+        {stops.map((stop) => (
+          <TransitStopComponent key={stop.id} stop={stop} stops={stops} />
         ))}
       </div>
     </div>
