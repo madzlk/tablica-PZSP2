@@ -36,7 +36,8 @@ W tej instrukcji opisany jest sposób konfiguracji automatycznego uruchamiania t
           realtime = yes
           priority = 1
          ```
-     5. **Uwaga: ta komenda zrestartuje system -** Jeżeli wpiszemy `sudo kill -STOP $(cat /var/run/watchdog.pid)`, zakłóci to prace watchdoga i po 60 sekundach nastąpi restart systemu, co udowodni że watchdog działa.
+     5. Po `sudo service watchdog stop` i `sudo service watchdog start` watchdog powinien już działać
+     6. **Uwaga: ta komenda zrestartuje system -** Jeżeli wpiszemy `sudo kill -STOP $(cat /var/run/watchdog.pid)`, zakłóci to prace watchdoga i po 60 sekundach nastąpi restart systemu, co udowodni że watchdog działa.
 
 
 11. W pliku /etc/default/apport zmienić wartość enabled na 0 aby komunikaty o błędach systemu nie wyświetlały się nad aplikacją
