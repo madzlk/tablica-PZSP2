@@ -14,8 +14,23 @@ export const TransitStopComponent = ({ stop, stops }: Props) => {
   const [departures, setDepartures] = useState<Departure[]>([]);
 
   useEffect(() => {
+    const stopsCount = stops.length;
+
+    let departuresCount = 6;
+    if (stopsCount <= 2) {
+      departuresCount = 16;
+    } else if (stopsCount <= 4) {
+      departuresCount = 12;
+    } else if (stopsCount <= 8) {
+      departuresCount = 9;
+    } else if (stopsCount >= 13) {
+      departuresCount = 4;
+    }
+
     const fetchData = () => {
-      stopsService.getTimesForStop(stop.id, 6).then((data) => setDepartures(data));
+      stopsService
+        .getTimesForStop(stop.id, departuresCount)
+        .then((data) => setDepartures(data));
     };
 
     fetchData();
@@ -47,7 +62,11 @@ export const TransitStopComponent = ({ stop, stops }: Props) => {
       </div>
       <div className="flex flex-col justify-around gap-1 h-full p-1 text-white">
         {departures.map((departure) => (
-          <DepartureComponent key={`${departure.czas_przyjazdu} - ${departure.linia}`} walkTime={stop.odleglosc} departure={departure} />
+          <DepartureComponent
+            key={`${departure.czas_przyjazdu} - ${departure.linia}`}
+            walkTime={stop.odleglosc}
+            departure={departure}
+          />
         ))}
       </div>
     </div>

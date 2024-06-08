@@ -16,7 +16,7 @@ export default {
       'xl': '1150px',
       // => @media (min-width: 1150px) { ... }
 
-      'horizontal': '1600px',
+      'horizontal': '1900px',
       // => @media (min-width: 1280px) { ... }
     },
   },

@@ -56,9 +56,15 @@ function App() {
         <StopsMapComponent mapStops={{ stops: stops }} />
       </div>
       <div
-        className={`h-[74%] horizontal:h-full horizontal:w-[74%] grid grid-cols-2 ${
-          stops.length > 12 ? "grid-cols-3" : ""
-        } horizontal:grid-cols-4 horizontal:p-2 gap-3 mx-4`}
+        className={` ${
+          stops.length == 1 ? "h-[35%]" : "h-[74%]"
+        } horizontal:h-full horizontal:w-[74%] grid grid-cols-2 ${
+          stops.length <= 3
+            ? `grid-cols-1 horizontal:grid-cols-${stops.length}`
+            : stops.length > 12
+            ? "grid-cols-3 horizontal:grid-cols-4"
+            : "horizontal:grid-cols-4"
+        }  horizontal:p-2 gap-3 mx-4`}
       >
         {stops.map((stop) => (
           <TransitStopComponent key={stop.id} stop={stop} stops={stops} />
