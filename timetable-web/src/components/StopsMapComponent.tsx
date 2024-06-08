@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { StopsMap } from "../types/StopsMap";
 import { StopComponent } from "./StopComponent";
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { APIProvider, AdvancedMarker, Map } from "@vis.gl/react-google-maps";
+import { FaSchool } from "react-icons/fa";
 
 interface Props {
   mapStops: StopsMap;
@@ -14,13 +15,12 @@ export const StopsMapComponent = ({ mapStops, lastUpdated }: Props) => {
   const [time, setTime] = useState<Date>(new Date(Date.now()));
 
   useEffect(() => {
-    var timer = setInterval(()=>setTime(new Date()), 1000)
+    var timer = setInterval(() => setTime(new Date()), 1000);
 
     return () => {
-      clearInterval(timer)
+      clearInterval(timer);
     };
   }, []);
-
 
   return (
     <APIProvider apiKey={import.meta.env.VITE_MAPS_API_KEY}>
@@ -41,6 +41,9 @@ export const StopsMapComponent = ({ mapStops, lastUpdated }: Props) => {
         <div className="absolute right-0 top-0 text-white text-sm z-10 m-3 py-1 px-3 bg-[#B49FAA] bg-opacity-50 shadow-md">
           Dane pobrane z api.um.warszawa.pl o: {lastUpdated.slice(0, -7)}
         </div>
+        <AdvancedMarker position={{ lat: 52.21919, lng: 21.01123 }}>
+          <FaSchool size={36}  className=" text-[#303a94]"/>
+        </AdvancedMarker>
         {mapStops.stops.map((stop, index) => (
           <StopComponent stop={stop} key={stop.id} componentId={index + 1} />
         ))}
