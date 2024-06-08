@@ -6,6 +6,7 @@ import stopsService from "./services/stops";
 
 function App() {
   const [stops, setStops] = useState<TransitStop[]>([]);
+  const [lastUpdated, setLastUpdated] = useState<string>("a");
 
   // compare stops ids and return true if they are equal or false if they are not
   const areIdsEqual = (
@@ -53,7 +54,7 @@ function App() {
   return (
     <div className="w-full h-screen text-nowrap bg-[#3B3B4B] horizontal:flex horizontal:flex-row horizontal:justify-between">
       <div className="flex h-[25%] horizontal:h-full horizontal:w-[25%] items-center justify-center p-6">
-        <StopsMapComponent mapStops={{ stops: stops }} />
+        <StopsMapComponent lastUpdated={lastUpdated} mapStops={{ stops: stops }} />
       </div>
       <div
         className={` ${
@@ -67,7 +68,7 @@ function App() {
         }  horizontal:p-2 gap-3 mx-4`}
       >
         {stops.map((stop) => (
-          <TransitStopComponent key={stop.id} stop={stop} stops={stops} />
+          <TransitStopComponent setLastUpdated={setLastUpdated} lastUpdated={lastUpdated} key={stop.id} stop={stop} stops={stops} />
         ))}
       </div>
     </div>

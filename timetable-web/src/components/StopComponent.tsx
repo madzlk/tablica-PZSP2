@@ -1,8 +1,8 @@
 import { AdvancedMarker } from "@vis.gl/react-google-maps";
-import { Stop } from "../types/Stop";
+import { TransitStop } from "../types/TransitStop";
 
 interface Props {
-  stop: Stop;
+  stop: TransitStop;
   componentId: number;
 }
 

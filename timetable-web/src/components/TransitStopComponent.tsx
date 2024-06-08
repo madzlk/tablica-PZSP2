@@ -1,6 +1,6 @@
 import { TransitStop } from "../types/TransitStop";
 import { DepartureComponent } from "./DepartureComponent";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import stopsService from "../services/stops";
 import { Departure } from "../types/Departure";
 import { BiWalk } from "react-icons/bi";
@@ -8,9 +8,16 @@ import { BiWalk } from "react-icons/bi";
 interface Props {
   stop: TransitStop;
   stops: TransitStop[];
+  lastUpdated: string;
+  setLastUpdated: Dispatch<SetStateAction<string>>;
 }
 
-export const TransitStopComponent = ({ stop, stops }: Props) => {
+export const TransitStopComponent = ({
+  stop,
+  stops,
+  lastUpdated,
+  setLastUpdated,
+}: Props) => {
   const [departures, setDepartures] = useState<Departure[]>([]);
 
   useEffect(() => {
@@ -28,9 +35,14 @@ export const TransitStopComponent = ({ stop, stops }: Props) => {
     }
 
     const fetchData = () => {
-      stopsService
-        .getTimesForStop(stop.id, departuresCount)
-        .then((data) => setDepartures(data));
+      stopsService.getTimesForStop(stop.id, departuresCount).then((data) => {
+        setDepartures(data);
+        if (data[0] && data[0].data_ostatniego_pobrania) {
+          if (data[0].data_ostatniego_pobrania != lastUpdated) {
+            setLastUpdated(data[0].data_ostatniego_pobrania);
+          }
+        }
+      });
     };
 
     fetchData();

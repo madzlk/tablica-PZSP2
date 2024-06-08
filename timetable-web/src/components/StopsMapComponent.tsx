@@ -7,9 +7,10 @@ import { APIProvider, Map } from "@vis.gl/react-google-maps";
 
 interface Props {
   mapStops: StopsMap;
+  lastUpdated: string;
 }
 
-export const StopsMapComponent = ({ mapStops }: Props) => {
+export const StopsMapComponent = ({ mapStops, lastUpdated }: Props) => {
   const [time, setTime] = useState<Date>(new Date(Date.now()));
 
   useEffect(() => {
@@ -36,6 +37,9 @@ export const StopsMapComponent = ({ mapStops }: Props) => {
           {time.getHours() +
             ":" +
             time.getMinutes().toString().padStart(2, "0")}
+        </div>
+        <div className="absolute right-0 top-0 text-white text-sm z-10 m-3 py-1 px-3 bg-[#B49FAA] bg-opacity-50 shadow-md">
+          Dane pobrane z api.um.warszawa.pl o: {lastUpdated.slice(0, -7)}
         </div>
         {mapStops.stops.map((stop, index) => (
           <StopComponent stop={stop} key={stop.id} componentId={index + 1} />
