@@ -11,7 +11,7 @@ interface Props {
 
 export const StopsMapComponent = ({ mapStops }: Props) => {
   const [time, setTime] = useState<Date>(new Date(Date.now()));
-  const [bounds, setBounds] = useState<google.maps.LatLngBoundsLiteral | undefined>(undefined);
+  const [bounds, setBounds] = useState<google.maps.LatLngBoundsLiteral>();
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
