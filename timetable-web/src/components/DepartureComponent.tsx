@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { Departure } from "../types/Departure";
 
 interface Props {
   departure: Departure;
+  walkTime: number;
 }
 
-export const DepartureComponent = ({ departure }: Props) => {
+export const DepartureComponent = ({ departure, walkTime }: Props) => {
   let parseArrivalTime = (timeString: string) => {
     let timeArray = timeString.split(":");
 
@@ -38,17 +40,30 @@ export const DepartureComponent = ({ departure }: Props) => {
     }
 
     if (difference === 0) {
-      return "< 1";
+      return <p className="text-[#ff414d]">&lt; 1</p>;
     } else if (difference < 60) {
       return (
         <>
-          {difference}
-          <div className="text-xs xl:text-sm">min</div>
+          <div className={difference < walkTime ? "text-[#ff414d]" : ""}>
+            {difference}
+          </div>
+          <div
+            className={`text-xs xl:text-sm ${
+              difference < walkTime ? "text-[#ff414d]" : ""
+            }`}
+          >
+            min
+          </div>
         </>
       );
     } else {
       const hours = Math.floor(difference / 60);
       const minutes = difference % 60;
+
+      if (hours == 23 && minutes == 59) {
+        return <p className="text-[#ff414d]">&lt; 1</p>; // handling a weird bug
+      }
+
       return (
         <>
           {hours}
@@ -72,7 +87,7 @@ export const DepartureComponent = ({ departure }: Props) => {
         <div>{departure.kierunek}</div>
       </div>
 
-      <div className="flex flex-row items-baseline">
+      <div className={`flex flex-row items-baseline`}>
         {displayArrivalTime(arrivalTime, currentTime)}
       </div>
     </div>

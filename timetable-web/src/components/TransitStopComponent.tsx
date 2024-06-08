@@ -47,7 +47,7 @@ export const TransitStopComponent = ({ stop, stops }: Props) => {
       </div>
       <div className="flex flex-col justify-around gap-1 h-full p-1 text-white">
         {departures.map((departure) => (
-          <DepartureComponent departure={departure} />
+          <DepartureComponent key={`${departure.czas_przyjazdu} - ${departure.linia}`} walkTime={stop.odleglosc} departure={departure} />
         ))}
       </div>
     </div>
