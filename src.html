@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Databse/API &mdash; Tablica-PZSP2 v1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5cb08e4e"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Testing" href="tests.html" />
+    <link rel="prev" title="backend-database" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Tablica-PZSP2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">backend-database</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Databse/API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src-folder">src folder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-api_classes">src.api_classes module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#api_classes.ApiAdapter"><code class="docutils literal notranslate"><span class="pre">ApiAdapter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#api_classes.ApiFacade"><code class="docutils literal notranslate"><span class="pre">ApiFacade</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#api_classes.CouldNotConnect"><code class="docutils literal notranslate"><span class="pre">CouldNotConnect</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#api_classes.DataObserver"><code class="docutils literal notranslate"><span class="pre">DataObserver</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#api_classes.IncorrectApiCall"><code class="docutils literal notranslate"><span class="pre">IncorrectApiCall</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src-api-declaration-module">src.api_declaration module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-database_classes">src.database_classes module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#database_classes.DatabaseAdapter"><code class="docutils literal notranslate"><span class="pre">DatabaseAdapter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#database_classes.DatabaseError"><code class="docutils literal notranslate"><span class="pre">DatabaseError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#database_classes.DatabaseFacade"><code class="docutils literal notranslate"><span class="pre">DatabaseFacade</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-main">src.main module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main.Logger"><code class="docutils literal notranslate"><span class="pre">Logger</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-orchestrator">src.orchestrator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#orchestrator.Orchestrator"><code class="docutils literal notranslate"><span class="pre">Orchestrator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#orchestrator.get_key"><code class="docutils literal notranslate"><span class="pre">get_key()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src-setup-db-module">src.setup_db module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">Testing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_run.html">User manual</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Tablica-PZSP2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">backend-database</a></li>
+      <li class="breadcrumb-item active">Databse/API</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="databse-api">
+<h1>Databse/API<a class="headerlink" href="#databse-api" title="Link to this heading"></a></h1>
+<section id="src-folder">
+<h2>src folder<a class="headerlink" href="#src-folder" title="Link to this heading"></a></h2>
+</section>
+<section id="module-api_classes">
+<span id="src-api-classes-module"></span><h2>src.api_classes module<a class="headerlink" href="#module-api_classes" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="api_classes.ApiAdapter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">api_classes.</span></span><span class="sig-name descname"><span class="pre">ApiAdapter</span></span><a class="reference internal" href="_modules/api_classes.html#ApiAdapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiAdapter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.ApiAdapter.fix_time">
+<span class="sig-name descname"><span class="pre">fix_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiAdapter.fix_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiAdapter.fix_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.ApiAdapter.parse_api_lines">
+<span class="sig-name descname"><span class="pre">parse_api_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_lines_response</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiAdapter.parse_api_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiAdapter.parse_api_lines" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.ApiAdapter.parse_api_stops">
+<span class="sig-name descname"><span class="pre">parse_api_stops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_stops_response</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiAdapter.parse_api_stops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiAdapter.parse_api_stops" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.ApiAdapter.parse_api_timetables">
+<span class="sig-name descname"><span class="pre">parse_api_timetables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_timetables_response</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiAdapter.parse_api_timetables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiAdapter.parse_api_timetables" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.ApiAdapter.v">
+<span class="sig-name descname"><span class="pre">v</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thing</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiAdapter.v"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiAdapter.v" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="api_classes.ApiFacade">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">api_classes.</span></span><span class="sig-name descname"><span class="pre">ApiFacade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_adapter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiFacade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiFacade" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.ApiFacade.get_all_stops">
+<span class="sig-name descname"><span class="pre">get_all_stops</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiFacade.get_all_stops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiFacade.get_all_stops" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.ApiFacade.get_line_timetable">
+<span class="sig-name descname"><span class="pre">get_line_timetable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiFacade.get_line_timetable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiFacade.get_line_timetable" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.ApiFacade.get_lines_for_stop">
+<span class="sig-name descname"><span class="pre">get_lines_for_stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiFacade.get_lines_for_stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiFacade.get_lines_for_stop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.ApiFacade.get_lines_for_stops">
+<span class="sig-name descname"><span class="pre">get_lines_for_stops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiFacade.get_lines_for_stops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiFacade.get_lines_for_stops" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.ApiFacade.get_timetables_for_stops">
+<span class="sig-name descname"><span class="pre">get_timetables_for_stops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#ApiFacade.get_timetables_for_stops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.ApiFacade.get_timetables_for_stops" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="api_classes.CouldNotConnect">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">api_classes.</span></span><span class="sig-name descname"><span class="pre">CouldNotConnect</span></span><a class="reference internal" href="_modules/api_classes.html#CouldNotConnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.CouldNotConnect" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="api_classes.DataObserver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">api_classes.</span></span><span class="sig-name descname"><span class="pre">DataObserver</span></span><a class="reference internal" href="_modules/api_classes.html#DataObserver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.DataObserver" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.DataObserver.add_subscriber">
+<span class="sig-name descname"><span class="pre">add_subscriber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#DataObserver.add_subscriber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.DataObserver.add_subscriber" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.DataObserver.check_for_change">
+<span class="sig-name descname"><span class="pre">check_for_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#DataObserver.check_for_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.DataObserver.check_for_change" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.DataObserver.prepare_hash">
+<span class="sig-name descname"><span class="pre">prepare_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#DataObserver.prepare_hash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.DataObserver.prepare_hash" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="api_classes.DataObserver.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_classes.html#DataObserver.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.DataObserver.update" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="api_classes.IncorrectApiCall">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">api_classes.</span></span><span class="sig-name descname"><span class="pre">IncorrectApiCall</span></span><a class="reference internal" href="_modules/api_classes.html#IncorrectApiCall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api_classes.IncorrectApiCall" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+</section>
+<section id="src-api-declaration-module">
+<h2>src.api_declaration module<a class="headerlink" href="#src-api-declaration-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-database_classes">
+<span id="src-database-classes-module"></span><h2>src.database_classes module<a class="headerlink" href="#module-database_classes" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="database_classes.DatabaseAdapter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">database_classes.</span></span><span class="sig-name descname"><span class="pre">DatabaseAdapter</span></span><a class="reference internal" href="_modules/database_classes.html#DatabaseAdapter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseAdapter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseAdapter.parse_database_stop_ids">
+<span class="sig-name descname"><span class="pre">parse_database_stop_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stops</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseAdapter.parse_database_stop_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseAdapter.parse_database_stop_ids" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseAdapter.parse_times">
+<span class="sig-name descname"><span class="pre">parse_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">times</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseAdapter.parse_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseAdapter.parse_times" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseAdapter.turn_timetables_into_query">
+<span class="sig-name descname"><span class="pre">turn_timetables_into_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timetables</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseAdapter.turn_timetables_into_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseAdapter.turn_timetables_into_query" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="database_classes.DatabaseError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">database_classes.</span></span><span class="sig-name descname"><span class="pre">DatabaseError</span></span><a class="reference internal" href="_modules/database_classes.html#DatabaseError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">database_classes.</span></span><span class="sig-name descname"><span class="pre">DatabaseFacade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_adapter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.add_stop">
+<span class="sig-name descname"><span class="pre">add_stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.add_stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.add_stop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.execute_and_commit">
+<span class="sig-name descname"><span class="pre">execute_and_commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.execute_and_commit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.execute_and_commit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.fetchall_query">
+<span class="sig-name descname"><span class="pre">fetchall_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.fetchall_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.fetchall_query" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.get_active_stops">
+<span class="sig-name descname"><span class="pre">get_active_stops</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.get_active_stops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.get_active_stops" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.get_active_stops_ids">
+<span class="sig-name descname"><span class="pre">get_active_stops_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.get_active_stops_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.get_active_stops_ids" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.get_n_next_times">
+<span class="sig-name descname"><span class="pre">get_n_next_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.get_n_next_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.get_n_next_times" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.get_stops">
+<span class="sig-name descname"><span class="pre">get_stops</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.get_stops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.get_stops" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.get_stops_hash">
+<span class="sig-name descname"><span class="pre">get_stops_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.get_stops_hash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.get_stops_hash" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.get_timetables">
+<span class="sig-name descname"><span class="pre">get_timetables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.get_timetables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.get_timetables" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.get_timetables_hash">
+<span class="sig-name descname"><span class="pre">get_timetables_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.get_timetables_hash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.get_timetables_hash" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.remove_stop">
+<span class="sig-name descname"><span class="pre">remove_stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.remove_stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.remove_stop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.set_active_inactive">
+<span class="sig-name descname"><span class="pre">set_active_inactive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.set_active_inactive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.set_active_inactive" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.update_data">
+<span class="sig-name descname"><span class="pre">update_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_timetables</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.update_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.update_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database_classes.DatabaseFacade.update_time">
+<span class="sig-name descname"><span class="pre">update_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/database_classes.html#DatabaseFacade.update_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database_classes.DatabaseFacade.update_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-main">
+<span id="src-main-module"></span><h2>src.main module<a class="headerlink" href="#module-main" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Logger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">Logger</span></span><a class="reference internal" href="_modules/main.html#Logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Logger" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Logger.log">
+<span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Logger.log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Logger.log" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.main">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-orchestrator">
+<span id="src-orchestrator-module"></span><h2>src.orchestrator module<a class="headerlink" href="#module-orchestrator" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="orchestrator.Orchestrator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">orchestrator.</span></span><span class="sig-name descname"><span class="pre">Orchestrator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orchestrator.html#Orchestrator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orchestrator.Orchestrator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="orchestrator.Orchestrator.data_collection_cycle">
+<span class="sig-name descname"><span class="pre">data_collection_cycle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/orchestrator.html#Orchestrator.data_collection_cycle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orchestrator.Orchestrator.data_collection_cycle" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="orchestrator.get_key">
+<span class="sig-prename descclassname"><span class="pre">orchestrator.</span></span><span class="sig-name descname"><span class="pre">get_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/orchestrator.html#get_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orchestrator.get_key" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="src-setup-db-module">
+<h2>src.setup_db module<a class="headerlink" href="#src-setup-db-module" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="backend-database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tests.html" class="btn btn-neutral float-right" title="Testing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Magdalena Dudek, Franciszek Malewski, Stanisław Sikorksi, Paweł Rogóż.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

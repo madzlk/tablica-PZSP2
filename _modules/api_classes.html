@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>api_classes &mdash; Tablica-PZSP2 v1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5cb08e4e"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Tablica-PZSP2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">backend-database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_run.html">User manual</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tablica-PZSP2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">api_classes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for api_classes</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<div class="viewcode-block" id="CouldNotConnect">
+<a class="viewcode-back" href="../src.html#api_classes.CouldNotConnect">[docs]</a>
+<span class="k">class</span> <span class="nc">CouldNotConnect</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="IncorrectApiCall">
+<a class="viewcode-back" href="../src.html#api_classes.IncorrectApiCall">[docs]</a>
+<span class="k">class</span> <span class="nc">IncorrectApiCall</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<span class="c1"># Functions that are deterministic (can be tested):</span>
+<span class="c1"># Data Observer:</span>
+<span class="c1"># - prepare hash</span>
+<span class="c1"># - check for change</span>
+<span class="c1"># </span>
+<span class="c1"># Api Facade:</span>
+<span class="c1"># Similar to database facade, none, since we would be testing our mocked functions and not the actual connection to the api</span>
+<span class="c1">#</span>
+<span class="c1"># Api Adapter:</span>
+<span class="c1"># - parse api stops</span>
+<span class="c1"># - parse api lines</span>
+<span class="c1"># - parse api timetables</span>
+<span class="c1"># - fix time</span>
+
+<span class="c1"># Status of tests: All written, all passing</span>
+
+<span class="c1">#===============================================DATABASE OBSERVER==============================================</span>
+<span class="c1"># This Class monitors for changes in the data using a hash,</span>
+<span class="c1"># and when a new state of the data is detected, it sends the signal to all of it&#39;s subscribers via</span>
+<span class="c1"># the &quot;Update data&quot; method, all subscribers need to have this method implemented.</span>
+<div class="viewcode-block" id="DataObserver">
+<a class="viewcode-back" href="../src.html#api_classes.DataObserver">[docs]</a>
+<span class="k">class</span> <span class="nc">DataObserver</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subscribers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_hash</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Creates a hash from the data to use for comparison </span>
+<span class="c1"># ignores unnecessary fields such as ids or timestamps (which get updated every time the data is updated)</span>
+<div class="viewcode-block" id="DataObserver.prepare_hash">
+<a class="viewcode-back" href="../src.html#api_classes.DataObserver.prepare_hash">[docs]</a>
+    <span class="k">def</span> <span class="nf">prepare_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">data_hash</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">data_hash</span></div>
+
+    
+<div class="viewcode-block" id="DataObserver.add_subscriber">
+<a class="viewcode-back" href="../src.html#api_classes.DataObserver.add_subscriber">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_subscriber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subscribers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span></div>
+
+
+<span class="c1"># If the state has changed, change internal state to new state and return True (to signal change)</span>
+<div class="viewcode-block" id="DataObserver.check_for_change">
+<a class="viewcode-back" href="../src.html#api_classes.DataObserver.check_for_change">[docs]</a>
+    <span class="k">def</span> <span class="nf">check_for_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">new_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_hash</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new_hash</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_hash</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_hash</span> <span class="o">=</span> <span class="n">new_hash</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+    
+<span class="c1"># Check for changes and if changes have occured, send new data state to subscribers,</span>
+<span class="c1"># otherwise sends the signal to update the time (since the data hasn&#39;t changed, but it has been checked.)</span>
+<div class="viewcode-block" id="DataObserver.update">
+<a class="viewcode-back" href="../src.html#api_classes.DataObserver.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_for_change</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscribers</span><span class="p">:</span>
+                <span class="n">sub</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscribers</span><span class="p">:</span>
+                <span class="n">sub</span><span class="o">.</span><span class="n">update_time</span><span class="p">()</span></div>
+</div>
+
+
+<span class="c1">#============================================API FACADE======================================================</span>
+<span class="c1"># Provides a convenient interface for working with the API</span>
+<div class="viewcode-block" id="ApiFacade">
+<a class="viewcode-back" href="../src.html#api_classes.ApiFacade">[docs]</a>
+<span class="k">class</span> <span class="nc">ApiFacade</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_adapter</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">api_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_adapter</span> <span class="o">=</span> <span class="n">api_adapter</span>
+
+<span class="c1"># Returns the list of all stops with their data (there&#39;s around 8000)</span>
+<div class="viewcode-block" id="ApiFacade.get_all_stops">
+<a class="viewcode-back" href="../src.html#api_classes.ApiFacade.get_all_stops">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_all_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://api.um.warszawa.pl/api/action/dbstore_get?id=ab75c33d-3a26-4342-b36a-6e5fef0a3ac3&amp;apikey=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_adapter</span><span class="o">.</span><span class="n">parse_api_stops</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CouldNotConnect</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t connect to the API&quot;</span><span class="p">)</span></div>
+
+
+<span class="c1"># Returns lines that are available at a given stop</span>
+<div class="viewcode-block" id="ApiFacade.get_lines_for_stop">
+<a class="viewcode-back" href="../src.html#api_classes.ApiFacade.get_lines_for_stop">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_lines_for_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop_id</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://api.um.warszawa.pl/api/action/dbtimetable_get?id=88cd555f-6f31-43ca-9de4-66c479ad5942&amp;busstopId=</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">stop_id</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s1">&amp;busstopNr=</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">stop_id</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span><span class="si">}</span><span class="s1">&amp;apikey=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CouldNotConnect</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t connect to the API&quot;</span><span class="p">)</span></div>
+
+    
+<span class="c1"># Returns a timetable for a specific stop and line.</span>
+<div class="viewcode-block" id="ApiFacade.get_line_timetable">
+<a class="viewcode-back" href="../src.html#api_classes.ApiFacade.get_line_timetable">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_line_timetable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop_id</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://api.um.warszawa.pl/api/action/dbtimetable_get?id=e923fa0e-d96c-43f9-ae6e-60518c9f3238&amp;busstopId=</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">stop_id</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s1">&amp;busstopNr=</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">stop_id</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span><span class="si">}</span><span class="s1">&amp;line=</span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s1">&amp;apikey=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CouldNotConnect</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t connect to the API&quot;</span><span class="p">)</span>    </div>
+
+
+<span class="c1"># Returns the lines for a number of stops.</span>
+<div class="viewcode-block" id="ApiFacade.get_lines_for_stops">
+<a class="viewcode-back" href="../src.html#api_classes.ApiFacade.get_lines_for_stops">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_lines_for_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop_ids</span><span class="p">):</span>
+        <span class="n">stops_lines</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">stop</span> <span class="ow">in</span> <span class="n">stop_ids</span><span class="p">:</span>
+            <span class="n">stop_buses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_adapter</span><span class="o">.</span><span class="n">parse_api_lines</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_lines_for_stop</span><span class="p">(</span><span class="n">stop</span><span class="p">))</span>
+            <span class="n">stops_lines</span><span class="p">[</span><span class="n">stop</span><span class="p">]</span> <span class="o">=</span> <span class="n">stop_buses</span>
+        <span class="k">return</span> <span class="n">stops_lines</span></div>
+
+    
+<span class="c1"># Returns the timetables for a list of stops.</span>
+<div class="viewcode-block" id="ApiFacade.get_timetables_for_stops">
+<a class="viewcode-back" href="../src.html#api_classes.ApiFacade.get_timetables_for_stops">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_timetables_for_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop_ids</span><span class="p">):</span>
+        <span class="n">stops_timetables</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">stop_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_lines_for_stops</span><span class="p">(</span><span class="n">stop_ids</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">stop_id</span> <span class="ow">in</span> <span class="n">stop_lines</span><span class="p">:</span>
+            <span class="n">stops_timetables</span><span class="p">[</span><span class="n">stop_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">stop_lines</span><span class="p">[</span><span class="n">stop_id</span><span class="p">]:</span>
+                <span class="n">stops_timetables</span><span class="p">[</span><span class="n">stop_id</span><span class="p">][</span><span class="n">line</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_adapter</span><span class="o">.</span><span class="n">parse_api_timetables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_line_timetable</span><span class="p">(</span><span class="n">stop_id</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">stops_timetables</span></div>
+</div>
+
+
+<span class="c1">#===================================================API ADAPTER==================================================</span>
+<span class="c1"># to understand the specific changes done to the data,</span>
+<span class="c1"># see &quot;Opis api.md&quot; for api response structure</span>
+<div class="viewcode-block" id="ApiAdapter">
+<a class="viewcode-back" href="../src.html#api_classes.ApiAdapter">[docs]</a>
+<span class="k">class</span> <span class="nc">ApiAdapter</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="ApiAdapter.v">
+<a class="viewcode-back" href="../src.html#api_classes.ApiAdapter.v">[docs]</a>
+    <span class="k">def</span> <span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thing</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">thing</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span></div>
+
+
+<span class="c1"># takes in the api response, returns a list of tuples with the stop data</span>
+<div class="viewcode-block" id="ApiAdapter.parse_api_stops">
+<a class="viewcode-back" href="../src.html#api_classes.ApiAdapter.parse_api_stops">[docs]</a>
+    <span class="k">def</span> <span class="nf">parse_api_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_stops_response</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">api_stops_response</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">IncorrectApiCall</span><span class="p">(</span><span class="s1">&#39;Api call failed&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">stops</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">stop_response</span> <span class="ow">in</span> <span class="n">api_stops_response</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]:</span>
+            <span class="n">stop_response</span> <span class="o">=</span> <span class="n">stop_response</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">]</span>
+            <span class="n">stop_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">stop_response</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">stop_response</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">stop_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">stop_response</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">stop_geo_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">stop_response</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">stop_geo_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">stop_response</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+            <span class="n">stop_destination</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">stop_response</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+            <span class="n">stop_start_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">stop_response</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+            <span class="n">stop_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">stop_id</span><span class="p">,</span> <span class="n">stop_name</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">stop_geo_1</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">stop_geo_2</span><span class="p">),</span> <span class="n">stop_destination</span><span class="p">,</span> <span class="n">stop_start_date</span><span class="p">)</span>
+            <span class="n">stops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stop_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stops</span></div>
+
+
+<span class="c1"># takes in the api response, returns a list of lines</span>
+<div class="viewcode-block" id="ApiAdapter.parse_api_lines">
+<a class="viewcode-back" href="../src.html#api_classes.ApiAdapter.parse_api_lines">[docs]</a>
+    <span class="k">def</span> <span class="nf">parse_api_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_lines_response</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">api_lines_response</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">IncorrectApiCall</span><span class="p">(</span><span class="s1">&#39;Api call failed&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line_dict</span> <span class="ow">in</span> <span class="n">api_lines_response</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]:</span>
+            <span class="n">line_info</span> <span class="o">=</span> <span class="n">line_dict</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">line_info</span><span class="p">:</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">lines</span></div>
+
+
+<span class="c1"># takes in the api response, returns a dict with the data</span>
+<div class="viewcode-block" id="ApiAdapter.parse_api_timetables">
+<a class="viewcode-back" href="../src.html#api_classes.ApiAdapter.parse_api_timetables">[docs]</a>
+    <span class="k">def</span> <span class="nf">parse_api_timetables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_timetables_response</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">api_timetables_response</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">IncorrectApiCall</span><span class="p">(</span><span class="s1">&#39;Api call failed&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">time_tables</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">time_table</span> <span class="ow">in</span> <span class="n">api_timetables_response</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]:</span>
+            <span class="n">t_t_i</span> <span class="o">=</span> <span class="n">time_table</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">]</span>
+            <span class="n">time_table_entr</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">t_t_i</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">t_t_i</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">t_t_i</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_time</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">t_t_i</span><span class="p">[</span><span class="mi">5</span><span class="p">])))</span>
+            <span class="n">time_tables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time_table_entr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">time_tables</span></div>
+
+
+<span class="c1"># For some reason the API thinks it&#39;s ok to pass back a time value of &quot;27:22:00&quot;</span>
+<span class="c1"># I have absolutely zero idea why, but that&#39;s how it works so i need a function to fix it.</span>
+<div class="viewcode-block" id="ApiAdapter.fix_time">
+<a class="viewcode-back" href="../src.html#api_classes.ApiAdapter.fix_time">[docs]</a>
+    <span class="k">def</span> <span class="nf">fix_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+        <span class="c1"># turning arbitrary number of hours into max 24 h</span>
+        <span class="n">tms</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+        <span class="n">time_delta</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">tms</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">minutes</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">tms</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">seconds</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">tms</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="c1"># adding the leading zero and returning</span>
+        <span class="n">bad</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">time_delta</span><span class="o">.</span><span class="n">seconds</span><span class="p">)),</span> <span class="s1">&#39;%H:%M:%S&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">bad</span><span class="p">,</span> <span class="s1">&#39;%H:%M:%S&#39;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Magdalena Dudek, Franciszek Malewski, Stanisław Sikorksi, Paweł Rogóż.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
