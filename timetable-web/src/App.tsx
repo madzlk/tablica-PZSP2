@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { TransitStop } from "./types/TransitStop";
+import { Location } from "./types/Location";
 import { TransitStopComponent } from "./components/TransitStopComponent";
 import { StopsMapComponent } from "./components/StopsMapComponent";
 import stopsService from "./services/stops";
@@ -7,6 +8,7 @@ import stopsService from "./services/stops";
 function App() {
   const [stops, setStops] = useState<TransitStop[]>([]);
   const [lastUpdated, setLastUpdated] = useState<string>("a");
+  const [location, setLocation] = useState<Location>({Latitude: 0, Longitude: 0});
 
   // compare stops ids and return true if they are equal or false if they are not
   const areIdsEqual = (
@@ -39,6 +41,15 @@ function App() {
           }
         })
         .catch((error) => console.error(error));
+
+      stopsService
+        .getLocation()
+        .then((data) => {
+          if (data.Latitude != location.Latitude || data.Longitude != location.Longitude) {
+            setLocation(data);
+          }
+        })
+        .catch((error) => console.error(error));
     };
 
     fetchData();
@@ -54,7 +65,7 @@ function App() {
   return (
     <div className="w-full h-screen text-nowrap bg-[#3B3B4B] horizontal:flex horizontal:flex-row horizontal:justify-between">
       <div className="flex h-[25%] horizontal:h-full horizontal:w-[25%] items-center justify-center p-6">
-        <StopsMapComponent lastUpdated={lastUpdated} mapStops={{ stops: stops }} />
+        <StopsMapComponent lastUpdated={lastUpdated} mapStops={{ stops: stops }} location={location}/>
       </div>
       <div
         className={` ${

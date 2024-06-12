@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Stop } from "../types/Stop";
+import { Location } from "../types/Location";
 
 const baseUrl = "/api";
 
@@ -10,6 +11,11 @@ const getAllStops = (): Promise<Stop[]> => {
 
 const getTimesForStop = (stopId: number, numberOfStops: number) => {
   const request = axios.get(`${baseUrl}/times/${stopId}/${numberOfStops}`);
+  return request.then((response) => response.data);
+};
+
+const getLocation = () : Promise<Location> => {
+  const request = axios.get(`${baseUrl}/project_location`);
   return request.then((response) => response.data);
 };
 
@@ -44,4 +50,4 @@ const adjustDistances = (data: Stop[]): Stop[] => {
   return data;
 };
 
-export default { getAllStops, getTimesForStop, adjustDistances };
+export default { getAllStops, getTimesForStop, getLocation, adjustDistances };

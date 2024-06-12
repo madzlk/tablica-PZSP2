@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { StopsMap } from "../types/StopsMap";
+import { Location } from "../types/Location";
 import { StopComponent } from "./StopComponent";
 import { APIProvider, AdvancedMarker, Map } from "@vis.gl/react-google-maps";
 import { FaSchool } from "react-icons/fa";
@@ -9,9 +10,10 @@ import { FaSchool } from "react-icons/fa";
 interface Props {
   mapStops: StopsMap;
   lastUpdated: string;
+  location: Location;
 }
 
-export const StopsMapComponent = ({ mapStops, lastUpdated }: Props) => {
+export const StopsMapComponent = ({ mapStops, lastUpdated, location }: Props) => {
   const [time, setTime] = useState<Date>(new Date(Date.now()));
 
   useEffect(() => {
@@ -21,6 +23,9 @@ export const StopsMapComponent = ({ mapStops, lastUpdated }: Props) => {
       clearInterval(timer);
     };
   }, []);
+
+  console.log("Latitude", location.Latitude);
+  console.log("Longitude", location.Longitude);
 
   return (
     <APIProvider apiKey={import.meta.env.VITE_MAPS_API_KEY}>
@@ -41,7 +46,7 @@ export const StopsMapComponent = ({ mapStops, lastUpdated }: Props) => {
         <div className="absolute right-0 top-0 text-white text-sm z-10 m-3 py-1 px-3 bg-[#B49FAA] bg-opacity-50 shadow-md">
           Dane pobrane z api.um.warszawa.pl o: {lastUpdated.slice(0, -7)}
         </div>
-        <AdvancedMarker position={{ lat: 52.21919, lng: 21.01123 }}>
+        <AdvancedMarker position={{ lat: location.Latitude, lng: location.Longitude }}>
           <FaSchool size={36}  className=" text-[#303a94]"/>
         </AdvancedMarker>
         {mapStops.stops.map((stop, index) => (
