@@ -10,6 +10,19 @@ def get_key():
     f = open(".env", "r")
     return f.read()
 
+def change_project_location(lat, lon):
+    f = open("project_location.txt", "w")
+    f.write(lat+'\n')
+    f.write(lon+'\n')
+    f.close()
+
+def get_project_location():
+    f = open("project_location.txt", "r")
+    str = 'Latitude:\n'+f.readline()+'Longitude:\n'+f.readline()
+    f.close()
+    return str
+
+
 class Square():
     def __init__(self, max_lat, min_lat, max_lon, min_lon):
         self.max_lat = max_lat
@@ -35,7 +48,8 @@ class AdminConsole():
                            "1.Change Stops Configuration\n"+
                            "2.Remove Stop\n"+
                            "3.Add Stop\n"+
-                           "4.Quit\n")
+                           "4.See/Change project location\n"
+                           "5.Quit\n")
             if act == '1':
                 while(True):
                     cls()
@@ -54,7 +68,7 @@ class AdminConsole():
                         else:
                             self.toggle_stop(int(stop), stat)
                 continue
-            if act == '2':
+            elif act == '2':
                 while(True):
                     cls()
                     self.print_stops(self.db_face.get_stops())
@@ -68,7 +82,7 @@ class AdminConsole():
                     else:
                         self.db_face.remove_stop(int(stop))
                 continue
-            if act == '3':
+            elif act == '3':
                 while(True):
                     cls()
                     opt = input("Choose how you'd like to find a stop in the city's database, or 'e' to return to main menu:\n"+
@@ -88,7 +102,28 @@ class AdminConsole():
                         stops = self.find_stops_by_square(square)
                         self.choose_stop_to_add(stops)
                 continue
-            if act == '4':
+            elif act == '4':
+                while(True):
+                    cls()
+                    choice = input(f'current project location:\n{get_project_location()}would you like to change location? Y/N\n')
+                    if choice == 'Y':
+                            cls()
+                            lon = input(f'Please provide the new longitude of the project coordinates:\n')
+                            if not(0<=float(lon)<=180):
+                                input('Incorrect longitude, press enter to restart.')
+                                continue
+                            lat = input(f"Please provide the new latitude of the project coordinates:\n")
+                            if not(0<=float(lat)<=90):
+                                input('Incorrect latitude, press enter to restart.')
+                            change_project_location(lat, lon)
+                            input(f'Location changed to:\n{get_project_location()}press enter to continue.')
+                            break
+                    if choice == 'N':
+                        break
+                    else:
+                        input(f'Incorrect option, press enter to restart.')
+                        continue
+            elif act == '5':
                 break
             else:
                 input('option not recognized,\n Please write only the number of the option you would like to choose.\n press enter to continue.\n')

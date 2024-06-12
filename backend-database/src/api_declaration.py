@@ -30,3 +30,11 @@ async def read_stops():
 @fast_api.get("/times/{stop_id}/{n}")
 async def read_times(stop_id, n):
     return data_face.get_n_next_times(int(stop_id), int(n))
+
+@fast_api.get("/project_location")
+async def read_location():
+    f = open('project_location.txt', 'r')
+    lon = float(f.readline())
+    lat = float(f.readline())
+    f.close()
+    return {'Longitude': lon, 'Latitude': lat}
