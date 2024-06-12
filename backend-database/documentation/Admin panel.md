@@ -21,7 +21,10 @@ A name to match is requested and then a list of stops with a matching name is re
 #### Add by coordinates
 The user is asked to define a box - the upper and lower bounds of longitude and latitude. In both cases the order (which one is higher and which is lower) doesn't matter. After defining the box, a list of stops within this box is returned. The user is asked to pick which stop should be added, asked for the walking distance to the stop, and then asked to confirm (while the data of the stop is being displayed.). After confirmation the stop is added to the database.
 
-### 4.Quit
+### 4.See and Change project location
+Let's the user see what are the current coordinates for the project, and change these coordinates as well.
+
+### 5.Quit
 Stops the program. Unecessary, since the program can always be stopped with ctrl+c, however added for ease of use.
 
 It's technically very hard to case any problems by exiting the program with ctrl+c because all database transactions are completed right after they are done, which means the only way to break anything is with very precise timing, however, using the Quit option is recommended.
