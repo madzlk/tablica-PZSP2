@@ -34,7 +34,7 @@ async def read_times(stop_id, n):
 @fast_api.get("/project_location")
 async def read_location():
     f = open('project_location.txt', 'r')
-    lon = float(f.readline())
     lat = float(f.readline())
+    lon = float(f.readline())
     f.close()
     return {'Longitude': lon, 'Latitude': lat}
